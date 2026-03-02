@@ -208,7 +208,7 @@ function e(n,s,r,g,sub,tag){return{n,s,r,g:G[g]||'',sub:sub||'',tag:tag||null}}
 
 const DAYS={
   monday:{
-    title:'Monday', sub:'Metabolic Capacity', duration:'34 min',
+    title:'Monday', sub:'Team Challenge', duration:'30 min',
     phases:[
       {label:'Warm Up',type:'warmup',items:[
         e('Fast Toe Taps','','20 reps','toe-taps','Bodyweight'),
@@ -216,18 +216,19 @@ const DAYS={
         e('Push-Ups','','10 reps','push-ups','Bodyweight'),
         e('Kettlebell Deadlifts','','10 reps','kb-deadlifts','Kettlebell'),
       ]},
-      {label:'Engine',type:'workout',note:'10 minutes. Intervals on any machine.',items:[
-        e('Row / Ski / Bike','5 rounds','45s hard / 75s easy','rowing-machine','Machine'),
+      {label:'Upper Bank',type:'workout',note:'Complete all reps before moving on.',items:[
+        e('Push-Ups','','100 reps (team total)','push-ups','Bodyweight'),
+        e('Rows','','100 reps','db-rows','Dumbbell'),
+        e('Dumbbell Press','','100 reps','db-bench-press','Dumbbell'),
       ]},
-      {label:'Bodyweight Density',type:'workout',note:'10 minutes. Repeat this cycle non-stop, as many rounds as you can.',items:[
-        e('Push-Ups','','10 reps','push-ups','Bodyweight'),
-        e('Air Squats','','15 reps','air-squats','Bodyweight'),
-        e('Sit-Ups','','20 reps','sit-ups','Bodyweight'),
+      {label:'Engine Bank',type:'workout',note:'Choose one. No mixing. One person at a time.',items:[
+        e('Machine (Rower/Ski/Bike)','','120 total calories','rowing-machine','Machine'),
+        e('Treadmill Run','','2km','treadmill','Machine'),
       ]},
-      {label:'Core',type:'workout',note:'10 minutes. 3 rounds.',items:[
-        e('Plank','3 rounds','30 sec','plank','Bodyweight'),
-        e('Dead Bug','3 rounds','10 per side','dead-bug','Bodyweight'),
-        e('Easy Walk','3 rounds','60 sec between rounds',''),
+      {label:'Lower Finish',type:'workout',note:'Split reps freely between team.',items:[
+        e('Lunges','','100 reps','lunges','Bodyweight'),
+        e('Kettlebell Swings','','100 reps','kb-deadlifts','Kettlebell'),
+        e('Goblet Squats','','100 reps','goblet-squat','Dumbbell'),
       ]},
       {label:'Stretch',type:'stretch',items:[
         e('Chest Doorway Stretch','','30s each side','chest-stretch'),
