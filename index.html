@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Workout</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  
+  :root {
+    --bg: #0a0a0a;
+    --card: #141414;
+    --card-hover: #1a1a1a;
+    --accent: #e2ff3f;
+    --text: #f0f0f0;
+    --text-dim: #888;
+    --border: #222;
+    --section-bg: #111;
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px 0;
+  }
+  
+  .title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  
+  .days {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .days::-webkit-scrollbar { display: none; }
+  
+  .day-btn {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .day-btn.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+  .day-btn:not(.active):hover { border-color: #444; color: var(--text); }
+  
+  .content { padding: 16px; padding-bottom: 80px; }
+  
+  .day-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .day-subtitle {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  
+  .section {
+    margin-bottom: 20px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--section-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    user-select: none;
+  }
+  .section-header:hover { background: var(--card); }
+  .section-name {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .section-time {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .section-chevron {
+    font-size: 14px;
+    color: var(--text-dim);
+    transition: transform 0.3s;
+  }
+  .section.open .section-chevron { transform: rotate(180deg); }
+  
+  .section-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .section.open .section-body { max-height: 5000px; }
+  
+  .exercise {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid #1a1a1a;
+    align-items: flex-start;
+  }
+  .exercise:last-child { border-bottom: none; }
+  
+  .exercise-gif {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    background: var(--card);
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid var(--border);
+  }
+  .exercise-gif img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .exercise-gif .placeholder {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-align: center;
+    padding: 4px;
+    line-height: 1.3;
+  }
+  
+  .exercise-info { flex: 1; min-width: 0; }
+  .exercise-name {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .exercise-detail {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+  .exercise-detail .tag {
+    display: inline-block;
+    background: rgba(226,255,63,0.1);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  
+  .note {
+    padding: 10px 14px;
+    background: rgba(226,255,63,0.05);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    margin: 8px 0;
+    font-size: 13px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  .station-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    padding-left: 2px;
+  }
+  
+  /* GIF Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal-content {
+    max-width: 400px;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--card);
+  }
+  .modal-content img {
+    width: 100%;
+    display: block;
+  }
+  .modal-title {
+    padding: 14px 16px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  .stretch-section {
+    margin-top: 8px;
+  }
+  .stretch-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a1a1a;
+    align-items: center;
+  }
+  .stretch-item:last-child { border-bottom: none; }
+  .stretch-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .stretch-text {
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+  .stretch-text strong { color: var(--text); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="title">Weekly Training</div>
+  <div class="days" id="dayTabs"></div>
+</div>
+
+<div class="content" id="content"></div>
+
+<div class="modal-overlay" id="modal" onclick="closeModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <img id="modalImg" src="" alt="">
+    <div class="modal-title" id="modalTitle"></div>
+  </div>
+</div>
+
+<script>
+const GIFS = {
+  // Using publicly accessible exercise GIF URLs
+  'push-ups': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Push-Up.gif',
+  'air-squats': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Air-Squat.gif',
+  'sit-ups': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Sit-up.gif',
+  'plank': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Front-Plank.gif',
+  'dead-bug': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dead-Bug.gif',
+  'toe-taps': 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Toe-Tap.gif',
+  'kb-deadlifts': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Kettlebell-Deadlift.gif',
+  'rowing-machine': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Rowing-Machine.gif',
+  'atg-split-squats': 'https://fitnessprogramer.com/wp-content/uploads/2022/04/ATG-Split-Squat.gif',
+  'glute-bridges': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Glute-Bridge.gif',
+  'supermen': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Superman.gif',
+  'back-squats': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Squat.gif',
+  'kb-deadlift': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Kettlebell-Deadlift.gif',
+  'db-rdl': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Romanian-Deadlift.gif',
+  'bulgarian-split-squats': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Bulgarian-Split-Squat.gif',
+  'walking-lunges': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Walking-Lunge.gif',
+  'squat-hold': 'https://fitnessprogramer.com/wp-content/uploads/2022/02/Wall-Sit.gif',
+  'scap-push-ups': 'https://fitnessprogramer.com/wp-content/uploads/2022/02/Scapular-Push-up.gif',
+  'band-pull-aparts': 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Band-Pull-Apart.gif',
+  'db-rows': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Row.gif',
+  'db-bench-press': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Press.gif',
+  'lateral-raises': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Lateral-Raise.gif',
+  'rear-delt-fly': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Delt-Fly.gif',
+  'leg-raises': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Lying-Leg-Raise.gif',
+  'side-plank': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Side-Plank.gif',
+  'step-ups': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Step-up.gif',
+  'hip-hinges': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Good-Morning.gif',
+  'jumping-jacks': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Jumping-Jack.gif',
+  'high-knees': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/High-Knee-Run.gif',
+  'hip-thrusts': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Hip-Thrust.gif',
+  'bike': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Stationary-Bike.gif',
+  'lunges': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Lunge.gif',
+  'goblet-squat': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Goblet-Squat.gif',
+  'db-shoulder-press': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Shoulder-Press.gif',
+  'tib-raises': 'https://fitnessprogramer.com/wp-content/uploads/2022/02/Tibialis-Anterior-Raise.gif',
+  'good-mornings': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Good-Morning.gif',
+  'calf-raises': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Standing-Calf-Raise.gif',
+  'calf-stretch': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Calf-Stretch.gif',
+  'jefferson-curl': 'https://fitnessprogramer.com/wp-content/uploads/2022/02/Jefferson-Curl.gif',
+  'deep-squat': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Air-Squat.gif',
+  'pigeon-stretch': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Pigeon-Stretch.gif',
+  'hamstring-stretch': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Standing-Hamstring-Stretch.gif',
+  'hip-flexor-stretch': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Hip-Flexor-Stretch.gif',
+  'sled-push': 'https://fitnessprogramer.com/wp-content/uploads/2022/02/Sled-Push.gif',
+  'burpees': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Burpee.gif',
+  'treadmill': 'https://fitnessprogramer.com/wp-content/uploads/2021/10/Treadmill-Running.gif',
+  'poliquin-step-downs': 'https://fitnessprogramer.com/wp-content/uploads/2022/04/Poliquin-Step-Up.gif',
+  'slantboard-squats': 'https://fitnessprogramer.com/wp-content/uploads/2022/04/ATG-Split-Squat.gif',
+  'single-leg-balance': 'https://fitnessprogramer.com/wp-content/uploads/2022/02/Single-Leg-Balance.gif',
+  'chest-stretch': 'https://fitnessprogramer.com/wp-content/uploads/2022/02/Chest-Stretch.gif',
+  'shoulder-stretch': 'https://fitnessprogramer.com/wp-content/uploads/2022/02/Cross-Body-Shoulder-Stretch.gif',
+  'tricep-stretch': 'https://fitnessprogramer.com/wp-content/uploads/2022/02/Overhead-Tricep-Stretch.gif',
+  'quad-stretch': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Standing-Quad-Stretch.gif',
+  'glute-stretch': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Pigeon-Stretch.gif',
+  'cat-cow': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Cat-Cow-Stretch.gif',
+  'childs-pose': 'https://fitnessprogramer.com/wp-content/uploads/2022/02/Childs-Pose.gif',
+  'cobra-stretch': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Cobra-Stretch.gif',
+};
+
+function gif(key) { return GIFS[key] || ''; }
+
+function ex(name, detail, gifKey, tags) {
+  return { name, detail, gif: gif(gifKey), tags: tags || [] };
+}
+
+const DAYS = {
+  monday: {
+    title: 'Monday',
+    subtitle: 'Met Con / Team Challenge',
+    sections: [
+      {
+        name: 'Warm Up',
+        time: '4 min',
+        exercises: [
+          ex('Fast Toe Taps', '20 reps', 'toe-taps'),
+          ex('Air Squats', '10 reps', 'air-squats'),
+          ex('Push-Ups', '10 reps', 'push-ups'),
+          ex('KB Deadlifts', '10 reps', 'kb-deadlifts'),
+        ]
+      },
+      {
+        name: 'Block A: Engine',
+        time: '10 min',
+        exercises: [
+          ex('Row / Ski / Bike', '45s hard / 75s easy x 5', 'rowing-machine', ['Cardio']),
+        ]
+      },
+      {
+        name: 'Block B: Bodyweight Density',
+        time: '10 min AMRAP',
+        exercises: [
+          ex('Push-Ups', '10 reps', 'push-ups'),
+          ex('Air Squats', '15 reps', 'air-squats'),
+          ex('Sit-Ups', '20 reps', 'sit-ups'),
+        ]
+      },
+      {
+        name: 'Block C: Core Flush',
+        time: '10 min / 3 rounds',
+        exercises: [
+          ex('Plank', '30 seconds', 'plank'),
+          ex('Dead Bug', '10 per side', 'dead-bug'),
+          ex('Easy Walk', '60 seconds', '', ['Active Recovery']),
+        ]
+      },
+      {
+        name: '🧘 Stretching',
+        time: '5 min',
+        isStretch: true,
+        stretches: [
+          '**Chest doorway stretch** - 30 sec each side (opens up from push-ups)',
+          '**Quad stretch** - 30 sec each leg (recovery from squats)',
+          '**Hip flexor stretch** - 30 sec each side (counteracts sitting + squats)',
+          '**Cat-cow** - 10 slow reps (spine decompression after core work)',
+          '**Child\'s pose** - 30 sec (full body relaxation)',
+          '**Standing calf stretch** - 20 sec each side',
+        ]
+      }
+    ]
+  },
+  tuesday: {
+    title: 'Tuesday',
+    subtitle: 'Lower Body Strength',
+    sections: [
+      {
+        name: 'Warm Up',
+        time: '5 min',
+        exercises: [
+          ex('ATG Split Squats', '2 x 10 each leg', 'atg-split-squats'),
+          ex('Single-Leg Glute Bridges', '2 x 10 each leg', 'glute-bridges'),
+          ex('Lying Supermen', '2 x 10', 'supermen'),
+        ]
+      },
+      {
+        name: 'Station 1: Barbell Squats',
+        time: '7 min',
+        exercises: [
+          ex('Back Squats', '8-12 reps, 2-3 sets', 'back-squats'),
+        ]
+      },
+      {
+        name: 'Station 2: Trap Bar + DB RDL',
+        time: '7 min',
+        exercises: [
+          ex('KB Deadlift', '6-10 reps', 'kb-deadlift', ['Superset']),
+          ex('DB RDL', '10-15 reps', 'db-rdl', ['Superset']),
+          ex('Sled Push', '15-20m (optional)', 'sled-push', ['Optional']),
+        ],
+        note: 'Partner Rest → Swap. Repeat 2-3 Sets.'
+      },
+      {
+        name: 'Station 3: Bulgarian Split Squats',
+        time: '7 min',
+        exercises: [
+          ex('Bulgarian Split Squats', '8-12 per leg, 2-3 sets', 'bulgarian-split-squats'),
+        ]
+      },
+      {
+        name: 'Station 4: DB Lunges + Squat Hold',
+        time: '7 min',
+        exercises: [
+          ex('DB Walking Lunges', '12-16 per leg', 'walking-lunges'),
+          ex('Squat Hold', 'While partner lunges', 'squat-hold'),
+        ],
+        note: 'Swap. Rest 60-90s. Repeat 2-3 Sets.'
+      },
+      {
+        name: '🧘 Stretching',
+        time: '5-7 min',
+        isStretch: true,
+        stretches: [
+          '**Deep squat hold** - 45 sec (hip + ankle mobility)',
+          '**Pigeon stretch** - 30 sec each side (glutes + hip rotators)',
+          '**Standing quad stretch** - 30 sec each leg',
+          '**Hamstring stretch** - 30 sec each leg (standing or seated)',
+          '**Hip flexor lunge stretch** - 30 sec each side (counteract squats)',
+          '**Calf stretch against wall** - 20 sec each side',
+          '**Glute cross-body stretch** - 20 sec each side (lying figure-4)',
+        ]
+      }
+    ]
+  },
+  wednesday: {
+    title: 'Wednesday',
+    subtitle: 'Upper Engine + Hypertrophy',
+    sections: [
+      {
+        name: 'Warm Up',
+        time: '4 min',
+        exercises: [
+          ex('Scap Push-Ups', '10 reps', 'scap-push-ups'),
+          ex('Band Pull-Aparts', '10 reps', 'band-pull-aparts'),
+          ex('Light DB Rows', '10 each arm', 'db-rows'),
+          ex('Slow Push-Ups', '10 reps', 'push-ups'),
+        ]
+      },
+      {
+        name: 'A: Upper Strength',
+        time: '10 min / 3 rounds',
+        exercises: [
+          ex('DB Bench Press', '10 reps', 'db-bench-press'),
+          ex('DB Row', '12 each arm', 'db-rows'),
+        ],
+        note: 'Rest 60 sec between rounds.'
+      },
+      {
+        name: 'B: Shoulder & Upper Back',
+        time: '10 min / 3 rounds',
+        exercises: [
+          ex('Lateral Raises', '10-12 reps', 'lateral-raises'),
+          ex('Rear Delt Fly', '12-15 reps', 'rear-delt-fly'),
+        ],
+        note: 'Rest 45-60 sec between rounds.'
+      },
+      {
+        name: 'C: Core',
+        time: '10 min / 3 rounds',
+        exercises: [
+          ex('Sit-Ups', '20 reps', 'sit-ups'),
+          ex('Leg Raises', '10-15 reps', 'leg-raises'),
+          ex('Side Plank', '30 sec each side', 'side-plank'),
+        ],
+        note: 'Rest 45 sec between rounds.'
+      },
+      {
+        name: '🧘 Stretching',
+        time: '5 min',
+        isStretch: true,
+        stretches: [
+          '**Chest doorway stretch** - 30 sec each side (opens pecs after pressing)',
+          '**Cross-body shoulder stretch** - 20 sec each arm',
+          '**Overhead tricep stretch** - 20 sec each arm',
+          '**Lat hang or stretch** - 20 sec (decompress after rows)',
+          '**Cobra stretch** - 30 sec (opens up anterior chain)',
+          '**Cat-cow** - 10 slow reps (spine mobility after core)',
+          '**Child\'s pose with arms extended** - 30 sec',
+        ]
+      }
+    ]
+  },
+  thursday: {
+    title: 'Thursday',
+    subtitle: 'Legs & Lungs',
+    sections: [
+      {
+        name: 'Warm Up',
+        time: '4 min',
+        exercises: [
+          ex('Step-Ups', '10 each leg', 'step-ups'),
+          ex('Hip Hinges', '10 reps', 'hip-hinges'),
+          ex('Jumping Jacks', '10 reps', 'jumping-jacks'),
+          ex('High Knees', '20 reps', 'high-knees'),
+        ]
+      },
+      {
+        name: 'A: Moderate Engine',
+        time: '10 min',
+        exercises: [
+          ex('Bike, Row, or Ski', 'Moderate steady pace', 'bike', ['Cardio']),
+        ]
+      },
+      {
+        name: 'B: Lower Accessories',
+        time: '15 min / 3 rounds',
+        exercises: [
+          ex('Hip Thrusts', '12 reps', 'hip-thrusts'),
+          ex('DB RDL', '15 reps', 'db-rdl'),
+          ex('Step-Ups', '12 each leg', 'step-ups'),
+        ],
+        note: 'Rest 60 seconds between rounds.'
+      },
+      {
+        name: 'C: Cooldown',
+        time: '5 min',
+        exercises: [
+          ex('Easy Walk or Light Bike', 'Bring heart rate down', '', ['Recovery']),
+        ]
+      },
+      {
+        name: '🧘 Stretching',
+        time: '5-7 min',
+        isStretch: true,
+        stretches: [
+          '**Standing hamstring stretch** - 30 sec each leg',
+          '**Hip flexor lunge stretch** - 30 sec each side',
+          '**Pigeon stretch** - 30 sec each side (deep glute release)',
+          '**Standing quad stretch** - 30 sec each leg',
+          '**Seated butterfly stretch** - 30 sec (inner thighs)',
+          '**Supine spinal twist** - 20 sec each side (lower back relief)',
+          '**Standing calf stretch** - 20 sec each side',
+        ]
+      }
+    ]
+  },
+  friday: {
+    title: 'Friday',
+    subtitle: '3 Station Race',
+    sections: [
+      {
+        name: 'Warm Up',
+        time: '5 min / team pace',
+        exercises: [
+          ex('Easy Jog or Machine', '200m', 'treadmill'),
+          ex('Air Squats', '20 reps', 'air-squats'),
+          ex('Alternating Lunges', '20 reps', 'lunges'),
+          ex('Plank', '30 seconds', 'plank'),
+          ex('Toe Taps', '20 reps', 'toe-taps'),
+        ]
+      },
+      {
+        name: 'Station 1: Engine',
+        time: '6 min',
+        exercises: [
+          ex('Max Calories', 'Any machine: rower, ski, bike', 'rowing-machine', ['Max Effort']),
+        ],
+        note: 'One athlete works at a time. Tag in/out as needed. Score: Total calories.'
+      },
+      {
+        name: 'Station 2: Core Gauntlet',
+        time: '6 min',
+        exercises: [
+          ex('Block 1: Core Work', '3 x 1 min work, 1 x 1 min rest', 'sit-ups'),
+          ex('Block 2: Core Work', '2 x 1 min work', 'plank'),
+        ],
+        note: 'Fixed timing structure. Follow exactly.'
+      },
+      {
+        name: 'Station 3: Treadmill Max Distance',
+        time: '6 min',
+        exercises: [
+          ex('Treadmill Sprint', 'Max distance in 6 min', 'treadmill', ['Max Effort']),
+        ],
+        note: 'One runner at a time. Swap as often as needed. Score: Total distance.'
+      },
+      {
+        name: '🧘 Stretching',
+        time: '5 min',
+        isStretch: true,
+        stretches: [
+          '**Deep squat hold** - 30 sec (full body decompression)',
+          '**Standing hamstring stretch** - 30 sec each leg',
+          '**Hip flexor stretch** - 30 sec each side (post-running recovery)',
+          '**Cobra stretch** - 30 sec (opens up core after gauntlet)',
+          '**Supine spinal twist** - 20 sec each side',
+          '**Calf stretch** - 20 sec each side (post-treadmill)',
+          '**Slow deep breathing** - 60 sec (parasympathetic activation)',
+        ]
+      }
+    ]
+  },
+  saturday: {
+    title: 'Saturday',
+    subtitle: 'Lead Self Training Block',
+    sections: [
+      {
+        name: 'Block A: Lower Body Strength',
+        time: '8 min / 2-3 rounds',
+        exercises: [
+          ex('Goblet Squat', '10-12 reps', 'goblet-squat'),
+          ex('KB or DB RDL', '10-12 reps', 'db-rdl'),
+        ],
+        note: 'Rest 60 seconds between rounds. Purpose: reinforce squat + hinge patterns with strength-focused tempo and control.'
+      },
+      {
+        name: 'Block B: Upper Push/Pull',
+        time: '6 min / 2 rounds',
+        exercises: [
+          ex('DB Shoulder Press', '10-12 reps', 'db-shoulder-press'),
+          ex('DB Row', '10-12 reps each side', 'db-rows'),
+        ],
+        note: 'Rest 45-60 seconds. Purpose: upper-body strength support without duplicating push press volume.'
+      },
+      {
+        name: 'Block C: Core Stability',
+        time: '6 min / 2 rounds',
+        exercises: [
+          ex('Sit-Ups', '15-20 reps', 'sit-ups'),
+          ex('Dead Bugs', '10-15 each side', 'dead-bug'),
+          ex('Plank', '30-40 seconds', 'plank'),
+        ],
+        note: 'Rest 45 seconds. Purpose: controlled midline training to stabilize trunk after high-rep work.'
+      },
+      {
+        name: '🧘 Stretching',
+        time: '5 min',
+        isStretch: true,
+        stretches: [
+          '**Deep squat hold** - 30 sec (hip + ankle after squats)',
+          '**Hamstring stretch** - 30 sec each leg (post RDL)',
+          '**Cross-body shoulder stretch** - 20 sec each arm',
+          '**Overhead tricep stretch** - 20 sec each arm',
+          '**Cat-cow** - 10 reps (spinal mobility after core)',
+          '**Child\'s pose** - 30 sec (full body wind-down)',
+        ]
+      }
+    ]
+  },
+  sunday: {
+    title: 'Sunday',
+    subtitle: 'KOT Recovery (30 min)',
+    sections: [
+      {
+        name: 'Warm Up',
+        time: '5 min',
+        exercises: [
+          ex('Knee-Over-Toe Ankle Rocks', '30 sec each leg', ''),
+          ex('Patrick Step-Backs', '10 each side', ''),
+          ex('Tib Raises Against Wall', '12 reps', 'tib-raises'),
+          ex('Deep Squat Sit', '30 seconds', 'deep-squat'),
+          ex('Slow Good Mornings', '10 reps', 'good-mornings'),
+        ]
+      },
+      {
+        name: 'Block A: ATG Split Squat Progression',
+        time: '7 min / 3 rounds',
+        exercises: [
+          ex('ATG Split Squats', '8-10 each leg, 4s descent, 2s pause', 'atg-split-squats'),
+        ],
+        note: 'Optional light counterbalance (DB or plate). Rest 20-30 sec between legs. Progression: Add pause length or depth before adding load.'
+      },
+      {
+        name: 'Block B: Tibialis + Ankle Capacity',
+        time: '5 min / 3 rounds',
+        exercises: [
+          ex('Tib Raises', '15-20 reps', 'tib-raises'),
+          ex('Calf Stretch', '20-30 sec (straight knee)', 'calf-stretch'),
+          ex('Single-Leg Calf Raises', '15 reps slow', 'calf-raises'),
+        ],
+        note: 'Rest 30-45 sec. Progression: Increase tib reps or tempo before adding external load.'
+      },
+      {
+        name: 'Block C: Step-Downs + Squat Depth',
+        time: '5 min / 3 rounds',
+        exercises: [
+          ex('Poliquin Step-Downs', '10-12 each side', 'poliquin-step-downs'),
+          ex('Slantboard Squats', '6-8 reps, 5s eccentric', 'slantboard-squats'),
+        ],
+        note: 'Rest 45-60 sec. Progression: Increase eccentric time or add bottom pause.'
+      },
+      {
+        name: 'Block D: Jefferson Curl + Posterior Chain',
+        time: '4 min / 3 rounds',
+        exercises: [
+          ex('Jefferson Curls', '8-10 reps (very light)', 'jefferson-curl'),
+          ex('Tempo Good Mornings', '8-10 reps (3s down / 1s up)', 'good-mornings'),
+        ],
+        note: 'No rushing between reps. Progression: Add range before load.'
+      },
+      {
+        name: 'Block E: Balance + Isometrics',
+        time: '4 min / 2 rounds',
+        exercises: [
+          ex('Single-Leg Balance', '30 sec (barefoot if possible)', 'single-leg-balance'),
+          ex('Deep Split Squat Hold', '20 sec each side', 'atg-split-squats'),
+          ex('Deep Squat Breathing Hold', '30 sec', 'deep-squat'),
+        ],
+        note: 'Progression: Eyes closed or longer holds.'
+      },
+      {
+        name: 'Cooldown Flow',
+        time: '4 min',
+        isStretch: true,
+        stretches: [
+          '**Deep squat hold** - 30 sec',
+          '**Pigeon stretch** - 30 sec each side',
+          '**Hamstring stretch** - 30 sec',
+          '**Hip flexor stretch** - 30 sec each side',
+          '**Slow nasal breathing throughout**',
+        ]
+      }
+    ]
+  }
+};
+
+const dayOrder = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+const dayLabels = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+let activeDay = dayOrder[new Date().getDay() === 0 ? 6 : new Date().getDay() - 1];
+
+function renderTabs() {
+  const container = document.getElementById('dayTabs');
+  container.innerHTML = dayOrder.map((d, i) => 
+    `<button class="day-btn ${d === activeDay ? 'active' : ''}" onclick="selectDay('${d}')">${dayLabels[i]}</button>`
+  ).join('');
+}
+
+function selectDay(day) {
+  activeDay = day;
+  renderTabs();
+  renderContent();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderContent() {
+  const day = DAYS[activeDay];
+  const content = document.getElementById('content');
+  
+  let html = `<div class="day-title">${day.title}</div>`;
+  html += `<div class="day-subtitle">${day.subtitle}</div>`;
+  
+  day.sections.forEach((section, si) => {
+    html += `<div class="section open" id="section-${si}">`;
+    html += `<div class="section-header" onclick="toggleSection(${si})">`;
+    html += `<div><div class="section-name">${section.name}</div></div>`;
+    html += `<div style="display:flex;align-items:center;gap:10px;">`;
+    html += `<span class="section-time">${section.time}</span>`;
+    html += `<span class="section-chevron">▾</span>`;
+    html += `</div></div>`;
+    
+    html += `<div class="section-body">`;
+    
+    if (section.isStretch) {
+      html += `<div class="stretch-section">`;
+      section.stretches.forEach(s => {
+        html += `<div class="stretch-item">`;
+        html += `<div class="stretch-dot"></div>`;
+        html += `<div class="stretch-text">${s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</div>`;
+        html += `</div>`;
+      });
+      html += `</div>`;
+    } else {
+      if (section.note) {
+        html += `<div class="note">${section.note}</div>`;
+      }
+      section.exercises.forEach(ex => {
+        html += `<div class="exercise">`;
+        html += `<div class="exercise-gif" ${ex.gif ? `onclick="openModal('${ex.gif}','${ex.name.replace(/'/g, "\\'")}')"` : ''}>`;
+        if (ex.gif) {
+          html += `<img src="${ex.gif}" alt="${ex.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=placeholder>${ex.name}</div>'">`;
+        } else {
+          html += `<div class="placeholder">${ex.name}</div>`;
+        }
+        html += `</div>`;
+        html += `<div class="exercise-info">`;
+        html += `<div class="exercise-name">${ex.name}</div>`;
+        html += `<div class="exercise-detail">${ex.detail}`;
+        if (ex.tags && ex.tags.length) {
+          ex.tags.forEach(t => { html += ` <span class="tag">${t}</span>`; });
+        }
+        html += `</div></div></div>`;
+      });
+    }
+    
+    html += `</div></div>`;
+  });
+  
+  content.innerHTML = html;
+}
+
+function toggleSection(index) {
+  document.getElementById(`section-${index}`).classList.toggle('open');
+}
+
+function openModal(src, name) {
+  document.getElementById('modalImg').src = src;
+  document.getElementById('modalTitle').textContent = name;
+  document.getElementById('modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+renderTabs();
+renderContent();
+</script>
+</body>
+</html>
