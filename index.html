@@ -208,7 +208,7 @@ function e(n,s,r,g,sub,tag){return{n,s,r,g:G[g]||'',sub:sub||'',tag:tag||null}}
 
 const DAYS={
   monday:{
-    title:'Monday', sub:'Cardio + Bodyweight', duration:'30 min',
+    title:'Monday', sub:'Metabolic Capacity', duration:'34 min',
     phases:[
       {label:'Warm Up',type:'warmup',items:[
         e('Fast Toe Taps','','20 reps','toe-taps','Bodyweight'),
@@ -216,13 +216,18 @@ const DAYS={
         e('Push-Ups','','10 reps','push-ups','Bodyweight'),
         e('Kettlebell Deadlifts','','10 reps','kb-deadlifts','Kettlebell'),
       ]},
-      {label:'Workout',type:'workout',note:'Do as many rounds as possible for 10 min, then 3 rounds of core.',items:[
+      {label:'Engine',type:'workout',note:'10 minutes. Intervals on any machine.',items:[
         e('Row / Ski / Bike','5 rounds','45s hard / 75s easy','rowing-machine','Machine'),
-        e('Push-Ups','Non-stop','10 reps','push-ups','Bodyweight'),
-        e('Air Squats','Non-stop','15 reps','air-squats','Bodyweight'),
-        e('Sit-Ups','Non-stop','20 reps','sit-ups','Bodyweight'),
+      ]},
+      {label:'Bodyweight Density',type:'workout',note:'10 minutes. Repeat this cycle non-stop, as many rounds as you can.',items:[
+        e('Push-Ups','','10 reps','push-ups','Bodyweight'),
+        e('Air Squats','','15 reps','air-squats','Bodyweight'),
+        e('Sit-Ups','','20 reps','sit-ups','Bodyweight'),
+      ]},
+      {label:'Core',type:'workout',note:'10 minutes. 3 rounds.',items:[
         e('Plank','3 rounds','30 sec','plank','Bodyweight'),
         e('Dead Bug','3 rounds','10 per side','dead-bug','Bodyweight'),
+        e('Easy Walk','3 rounds','60 sec between rounds',''),
       ]},
       {label:'Stretch',type:'stretch',items:[
         e('Chest Doorway Stretch','','30s each side','chest-stretch'),
