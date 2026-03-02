@@ -90,14 +90,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 
 .note{font-size:11px;color:var(--dim);font-style:italic;padding:4px 0 8px}
 
-/* Stretch */
-.stretch{
-  display:flex;justify-content:space-between;align-items:baseline;
-  padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03);
-}
-.stretch:last-child{border-bottom:none}
-.stretch-name{font-size:13px;font-weight:500;color:var(--text)}
-.stretch-dur{font-size:12px;color:var(--dim);font-weight:500;flex-shrink:0;margin-left:12px}
+/* Stretch - same as exercises now */
 
 /* Modal */
 .modal{
@@ -182,6 +175,21 @@ const G={
 'poliquin-step-downs':'https://fitnessprogramer.com/wp-content/uploads/2022/04/Poliquin-Step-Up.gif',
 'slantboard-squats':'https://fitnessprogramer.com/wp-content/uploads/2022/04/ATG-Split-Squat.gif',
 'calf-stretch':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Calf-Stretch.gif',
+// Stretch GIFs
+'chest-stretch':'https://static.exercisedb.dev/media/3uj0Ozg.gif',
+'quad-stretch':'https://static.exercisedb.dev/media/tFGKm99.gif',
+'hip-flexor-stretch':'https://static.exercisedb.dev/media/tFGKm99.gif',
+'cat-cow':'https://static.exercisedb.dev/media/JbC2iaV.gif',
+'childs-pose':'https://static.exercisedb.dev/media/qBcKorM.gif',
+'s-calf-stretch':'https://static.exercisedb.dev/media/m0tCHqc.gif',
+'deep-squat-hold':'https://static.exercisedb.dev/media/BReCuOn.gif',
+'pigeon-stretch':'https://static.exercisedb.dev/media/bWlZvXh.gif',
+'hamstring-stretch':'https://static.exercisedb.dev/media/99rWm7w.gif',
+'shoulder-cross':'https://static.exercisedb.dev/media/uOV3Itw.gif',
+'tricep-stretch':'https://static.exercisedb.dev/media/Z5YStHW.gif',
+'cobra-stretch':'https://static.exercisedb.dev/media/isofgzg.gif',
+'butterfly-stretch':'https://static.exercisedb.dev/media/bWlZvXh.gif',
+'spinal-twist':'https://static.exercisedb.dev/media/2jl9K55.gif',
 };
 
 // Flat exercise list per day. No blocks, no hierarchy. Just: phase → exercises in order.
@@ -204,13 +212,13 @@ const DAYS = {
         {n:'Dead Bug',r:'10 per side x 3 rounds',g:'dead-bug'},
         {n:'Easy Walk',r:'60 sec between rounds',g:''},
       ], note:'AMRAP for 10 min, then 3 rounds of core.'},
-      { label:'Stretch', type:'stretch', stretches:[
-        {n:'Chest Doorway Stretch',d:'30s each side'},
-        {n:'Quad Stretch',d:'30s each leg'},
-        {n:'Hip Flexor Stretch',d:'30s each side'},
-        {n:'Cat-Cow',d:'10 slow reps'},
-        {n:"Child's Pose",d:'30s'},
-        {n:'Calf Stretch',d:'20s each side'},
+      { label:'Stretch', type:'stretch', items:[
+        {n:'Chest Doorway Stretch',r:'30s each side',g:'chest-stretch'},
+        {n:'Quad Stretch',r:'30s each leg',g:'quad-stretch'},
+        {n:'Hip Flexor Stretch',r:'30s each side',g:'hip-flexor-stretch'},
+        {n:'Cat-Cow',r:'10 slow reps',g:'cat-cow'},
+        {n:"Child's Pose",r:'30s',g:'childs-pose'},
+        {n:'Calf Stretch',r:'20s each side',g:'s-calf-stretch'},
       ]},
     ]
   },
@@ -231,13 +239,13 @@ const DAYS = {
         {n:'DB Walking Lunges',r:'12-16 per leg x 2-3 sets',g:'walking-lunges'},
         {n:'Squat Hold',r:'Hold while partner works',g:'squat-hold'},
       ], note:'Rest 60-90s between sets. Partner swap format.'},
-      { label:'Stretch', type:'stretch', stretches:[
-        {n:'Deep Squat Hold',d:'45s'},
-        {n:'Pigeon Stretch',d:'30s each side'},
-        {n:'Standing Quad Stretch',d:'30s each leg'},
-        {n:'Hamstring Stretch',d:'30s each leg'},
-        {n:'Hip Flexor Lunge Stretch',d:'30s each side'},
-        {n:'Calf Stretch',d:'20s each side'},
+      { label:'Stretch', type:'stretch', items:[
+        {n:'Deep Squat Hold',r:'45s',g:'deep-squat-hold'},
+        {n:'Pigeon Stretch',r:'30s each side',g:'pigeon-stretch'},
+        {n:'Standing Quad Stretch',r:'30s each leg',g:'quad-stretch'},
+        {n:'Hamstring Stretch',r:'30s each leg',g:'hamstring-stretch'},
+        {n:'Hip Flexor Lunge Stretch',r:'30s each side',g:'hip-flexor-stretch'},
+        {n:'Calf Stretch',r:'20s each side',g:'s-calf-stretch'},
       ]},
     ]
   },
@@ -259,13 +267,13 @@ const DAYS = {
         {n:'Leg Raises',r:'10-15 reps x 3 rounds',g:'leg-raises'},
         {n:'Side Plank',r:'30 sec each side x 3 rounds',g:'side-plank'},
       ], note:'Rest 45-60 sec between rounds.'},
-      { label:'Stretch', type:'stretch', stretches:[
-        {n:'Chest Doorway Stretch',d:'30s each side'},
-        {n:'Cross-Body Shoulder Stretch',d:'20s each arm'},
-        {n:'Overhead Tricep Stretch',d:'20s each arm'},
-        {n:'Cobra Stretch',d:'30s'},
-        {n:'Cat-Cow',d:'10 slow reps'},
-        {n:"Child's Pose",d:'30s'},
+      { label:'Stretch', type:'stretch', items:[
+        {n:'Chest Doorway Stretch',r:'30s each side',g:'chest-stretch'},
+        {n:'Cross-Body Shoulder Stretch',r:'20s each arm',g:'shoulder-cross'},
+        {n:'Overhead Tricep Stretch',r:'20s each arm',g:'tricep-stretch'},
+        {n:'Cobra Stretch',r:'30s',g:'cobra-stretch'},
+        {n:'Cat-Cow',r:'10 slow reps',g:'cat-cow'},
+        {n:"Child's Pose",r:'30s',g:'childs-pose'},
       ]},
     ]
   },
@@ -284,13 +292,13 @@ const DAYS = {
         {n:'DB RDL',r:'15 reps x 3 rounds',g:'db-rdl'},
         {n:'Step-Ups',r:'12 each leg x 3 rounds',g:'step-ups'},
       ], note:'Rest 60 sec between rounds. 5 min cooldown walk after.'},
-      { label:'Stretch', type:'stretch', stretches:[
-        {n:'Hamstring Stretch',d:'30s each leg'},
-        {n:'Hip Flexor Lunge Stretch',d:'30s each side'},
-        {n:'Pigeon Stretch',d:'30s each side'},
-        {n:'Standing Quad Stretch',d:'30s each leg'},
-        {n:'Butterfly Stretch',d:'30s'},
-        {n:'Supine Spinal Twist',d:'20s each side'},
+      { label:'Stretch', type:'stretch', items:[
+        {n:'Hamstring Stretch',r:'30s each leg',g:'hamstring-stretch'},
+        {n:'Hip Flexor Lunge Stretch',r:'30s each side',g:'hip-flexor-stretch'},
+        {n:'Pigeon Stretch',r:'30s each side',g:'pigeon-stretch'},
+        {n:'Standing Quad Stretch',r:'30s each leg',g:'quad-stretch'},
+        {n:'Butterfly Stretch',r:'30s',g:'butterfly-stretch'},
+        {n:'Supine Spinal Twist',r:'20s each side',g:'spinal-twist'},
       ]},
     ]
   },
@@ -309,13 +317,13 @@ const DAYS = {
         {n:'Core Work',r:'3x1 min on, 1 min rest, then 2x1 min',g:'sit-ups'},
         {n:'Treadmill Sprint',r:'6 min max distance',g:'treadmill'},
       ], note:'Teams rotate every 6 min. One person works at a time.'},
-      { label:'Stretch', type:'stretch', stretches:[
-        {n:'Deep Squat Hold',d:'30s'},
-        {n:'Hamstring Stretch',d:'30s each leg'},
-        {n:'Hip Flexor Stretch',d:'30s each side'},
-        {n:'Cobra Stretch',d:'30s'},
-        {n:'Spinal Twist',d:'20s each side'},
-        {n:'Deep Breathing',d:'60s'},
+      { label:'Stretch', type:'stretch', items:[
+        {n:'Deep Squat Hold',r:'30s',g:'deep-squat-hold'},
+        {n:'Hamstring Stretch',r:'30s each leg',g:'hamstring-stretch'},
+        {n:'Hip Flexor Stretch',r:'30s each side',g:'hip-flexor-stretch'},
+        {n:'Cobra Stretch',r:'30s',g:'cobra-stretch'},
+        {n:'Spinal Twist',r:'20s each side',g:'spinal-twist'},
+        {n:'Deep Breathing',r:'60s',g:''},
       ]},
     ]
   },
@@ -331,12 +339,12 @@ const DAYS = {
         {n:'Dead Bugs',r:'10-15 each side x 2 rounds',g:'dead-bug'},
         {n:'Plank',r:'30-40 sec x 2 rounds',g:'plank'},
       ], note:'Rest 45-60 sec between rounds.'},
-      { label:'Stretch', type:'stretch', stretches:[
-        {n:'Deep Squat Hold',d:'30s'},
-        {n:'Hamstring Stretch',d:'30s each leg'},
-        {n:'Cross-Body Shoulder Stretch',d:'20s each arm'},
-        {n:'Cat-Cow',d:'10 reps'},
-        {n:"Child's Pose",d:'30s'},
+      { label:'Stretch', type:'stretch', items:[
+        {n:'Deep Squat Hold',r:'30s',g:'deep-squat-hold'},
+        {n:'Hamstring Stretch',r:'30s each leg',g:'hamstring-stretch'},
+        {n:'Cross-Body Shoulder Stretch',r:'20s each arm',g:'shoulder-cross'},
+        {n:'Cat-Cow',r:'10 reps',g:'cat-cow'},
+        {n:"Child's Pose",r:'30s',g:'childs-pose'},
       ]},
     ]
   },
@@ -363,12 +371,12 @@ const DAYS = {
         {n:'Deep Split Squat Hold',r:'20 sec each side x 2 rounds',g:'atg-split-squats'},
         {n:'Deep Squat Breathing',r:'30 sec x 2 rounds',g:'deep-squat'},
       ], note:'No rushing. Focus on control and range.'},
-      { label:'Cooldown', type:'stretch', stretches:[
-        {n:'Deep Squat Hold',d:'30s'},
-        {n:'Pigeon Stretch',d:'30s each side'},
-        {n:'Hamstring Stretch',d:'30s'},
-        {n:'Hip Flexor Stretch',d:'30s each side'},
-        {n:'Nasal Breathing',d:'Throughout'},
+      { label:'Cooldown', type:'stretch', items:[
+        {n:'Deep Squat Hold',r:'30s',g:'deep-squat-hold'},
+        {n:'Pigeon Stretch',r:'30s each side',g:'pigeon-stretch'},
+        {n:'Hamstring Stretch',r:'30s',g:'hamstring-stretch'},
+        {n:'Hip Flexor Stretch',r:'30s each side',g:'hip-flexor-stretch'},
+        {n:'Nasal Breathing',r:'Throughout',g:''},
       ]},
     ]
   }
@@ -397,11 +405,7 @@ function render(){
 
     if(p.note) h+=`<div class="note">${p.note}</div>`;
 
-    if(p.stretches){
-      p.stretches.forEach(s=>{
-        h+=`<div class="stretch"><span class="stretch-name">${s.n}</span><span class="stretch-dur">${s.d}</span></div>`;
-      });
-    } else {
+    if(p.items){
       p.items.forEach(e=>{
         const src=G[e.g]||'';
         h+=`<div class="ex">`;
