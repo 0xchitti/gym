@@ -9,757 +9,431 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0a0a0a;--card:#141414;--border:#1c1c1c;
+  --accent:#c8ff00;--text:#f0f0f0;--dim:#666;--mid:#999;
+  --warm:#ff6b35;--str:#4ecdc4;--core:#a855f7;--stre:#22c55e;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
 
-:root {
-  --bg: #0a0a0a;
-  --card: #141414;
-  --card-border: #1e1e1e;
-  --accent: #c8ff00;
-  --text: #f5f5f5;
-  --text-mid: #a0a0a0;
-  --text-dim: #555;
-  --warmup: #ff6b35;
-  --strength: #4ecdc4;
-  --cardio: #ff3366;
-  --core: #a855f7;
-  --stretch: #22c55e;
-  --done: rgba(255,255,255,0.04);
-  --radius: 14px;
+.header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,10,10,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  padding:14px 16px 0;
 }
+.top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.logo{font-size:14px;font-weight:800;letter-spacing:-0.3px}
+.logo span{color:var(--accent)}
+.dur{font-size:12px;color:var(--dim);font-weight:600}
 
-html { scroll-behavior: smooth; }
+.days{display:flex;gap:6px;padding-bottom:12px;overflow-x:auto;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.day-btn{
+  flex-shrink:0;padding:7px 16px;border:1.5px solid var(--border);border-radius:100px;
+  background:transparent;color:var(--dim);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;
+}
+.day-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
 
-body {
-  font-family: 'Inter', -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-}
+.content{padding:0 16px 100px}
 
-/* HEADER */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(10,10,10,0.88);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  padding: 14px 16px 0;
-}
+.day-head{padding:24px 0 6px}
+.day-head h2{font-size:24px;font-weight:900;letter-spacing:-0.7px;line-height:1.1}
+.day-head p{font-size:13px;color:var(--mid);margin-top:4px;font-weight:500}
 
-.brand {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin-bottom: 12px;
+/* Phase divider */
+.phase{
+  display:flex;align-items:center;gap:10px;
+  padding:20px 0 10px;
 }
-.brand h1 {
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: -0.3px;
+.phase-line{flex:1;height:1px;background:var(--border)}
+.phase-label{
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
+  padding:4px 10px;border-radius:100px;
 }
-.brand h1 span { color: var(--accent); }
-.brand .day-label {
-  font-size: 12px;
-  color: var(--text-dim);
-  font-weight: 600;
-}
-
-.days {
-  display: flex;
-  gap: 6px;
-  padding-bottom: 12px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.days::-webkit-scrollbar { display: none; }
-
-.day-btn {
-  flex-shrink: 0;
-  padding: 7px 16px;
-  border: 1.5px solid var(--card-border);
-  border-radius: 100px;
-  background: transparent;
-  color: var(--text-dim);
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.day-btn.active {
-  background: var(--accent);
-  color: #000;
-  border-color: var(--accent);
-}
-
-/* CONTENT */
-.content {
-  padding: 0 16px 120px;
-}
-
-/* DAY INTRO */
-.day-intro {
-  padding: 24px 0 20px;
-}
-.day-intro h2 {
-  font-size: 26px;
-  font-weight: 900;
-  letter-spacing: -0.8px;
-  line-height: 1.1;
-}
-.day-intro .meta {
-  display: flex;
-  gap: 12px;
-  margin-top: 8px;
-}
-.day-intro .meta-item {
-  font-size: 12px;
-  color: var(--text-mid);
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-/* FLOW TIMELINE */
-.flow {
-  position: relative;
-}
-
-/* Section block */
-.block {
-  position: relative;
-  margin-bottom: 8px;
-}
-
-.block-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 0;
-  cursor: pointer;
-  user-select: none;
-}
-
-.block-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  position: relative;
-}
-.block-dot::after {
-  content: '';
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 2px;
-  height: calc(100% + 40px);
-  background: var(--card-border);
-}
-.block:last-child .block-dot::after { display: none; }
-
-.dot-warmup { background: var(--warmup); box-shadow: 0 0 8px rgba(255,107,53,0.4); }
-.dot-strength { background: var(--strength); box-shadow: 0 0 8px rgba(78,205,196,0.4); }
-.dot-cardio { background: var(--cardio); box-shadow: 0 0 8px rgba(255,51,102,0.4); }
-.dot-core { background: var(--core); box-shadow: 0 0 8px rgba(168,85,247,0.4); }
-.dot-stretch { background: var(--stretch); box-shadow: 0 0 8px rgba(34,197,94,0.4); }
-
-.block-info { flex: 1; min-width: 0; }
-.block-name {
-  font-size: 15px;
-  font-weight: 700;
-}
-.block-time {
-  font-size: 12px;
-  color: var(--text-dim);
-  font-weight: 500;
-  margin-top: 1px;
-}
-
-.block-chevron {
-  color: var(--text-dim);
-  font-size: 12px;
-  transition: transform 0.3s;
-  flex-shrink: 0;
-}
-.block.open .block-chevron { transform: rotate(180deg); }
-
-/* Block body */
-.block-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  padding-left: 22px;
-}
-.block.open .block-body {
-  max-height: 3000px;
-}
-
-.block-note {
-  font-size: 12px;
-  color: var(--text-dim);
-  font-style: italic;
-  padding: 0 0 10px 0;
-}
+.phase-warmup .phase-label{color:var(--warm);background:rgba(255,107,53,0.1)}
+.phase-workout .phase-label{color:var(--str);background:rgba(78,205,196,0.1)}
+.phase-stretch .phase-label{color:var(--stre);background:rgba(34,197,94,0.1)}
 
 /* Exercise row */
-.exercise {
-  display: flex;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-  align-items: center;
+.ex{
+  display:flex;gap:14px;padding:12px 0;
+  border-bottom:1px solid rgba(255,255,255,0.03);
+  align-items:center;
 }
-.exercise:last-child { border-bottom: none; }
+.ex:last-child{border-bottom:none}
 
-.ex-gif {
-  width: 64px;
-  height: 64px;
-  border-radius: 12px;
-  background: var(--card);
-  flex-shrink: 0;
-  overflow: hidden;
-  cursor: pointer;
-  border: 1px solid var(--card-border);
+.ex-thumb{
+  width:60px;height:60px;border-radius:12px;background:var(--card);
+  flex-shrink:0;overflow:hidden;cursor:pointer;border:1px solid var(--border);
 }
-.ex-gif img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.ex-gif .ph {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 9px;
-  color: var(--text-dim);
-  text-align: center;
-  padding: 4px;
-  line-height: 1.2;
+.ex-thumb img{width:100%;height:100%;object-fit:cover}
+.ex-thumb .ph{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:var(--dim);text-align:center;padding:4px;line-height:1.2;
 }
 
-.ex-info { flex: 1; min-width: 0; }
-.ex-name {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.3;
-}
-.ex-detail {
-  font-size: 12px;
-  color: var(--text-dim);
-  margin-top: 1px;
-}
+.ex-main{flex:1;min-width:0}
+.ex-name{font-size:14px;font-weight:600;line-height:1.3}
+.ex-reps{font-size:12px;color:var(--mid);margin-top:2px}
 
-.ex-badge {
-  display: inline-block;
-  padding: 2px 7px;
-  border-radius: 5px;
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  margin-top: 3px;
+.ex-tag{
+  display:inline-block;margin-top:3px;
+  padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.3px;
 }
-.badge-superset { background: rgba(200,255,0,0.15); color: var(--accent); }
-.badge-optional { background: rgba(255,255,255,0.06); color: var(--text-dim); }
-.badge-cardio { background: rgba(255,51,102,0.15); color: var(--cardio); }
-.badge-maxeffort { background: rgba(255,51,102,0.15); color: var(--cardio); }
-.badge-recovery { background: rgba(34,197,94,0.12); color: var(--stretch); }
+.tag-superset{background:rgba(200,255,0,0.12);color:var(--accent)}
+.tag-optional{background:rgba(255,255,255,0.05);color:var(--dim)}
+.tag-rest{background:rgba(255,255,255,0.05);color:var(--dim)}
 
-/* Stretch items */
-.stretch-list { padding: 4px 0 8px; }
-.stretch-item {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  padding: 7px 0;
-}
-.stretch-bullet {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--stretch);
-  flex-shrink: 0;
-  margin-top: 5px;
-}
-.stretch-name {
-  font-size: 13px;
-  font-weight: 500;
-}
-.stretch-dur {
-  font-size: 11px;
-  color: var(--text-dim);
-  margin-left: auto;
-  flex-shrink: 0;
-  font-weight: 500;
-}
+.note{font-size:11px;color:var(--dim);font-style:italic;padding:4px 0 8px}
 
-/* Progress indicator */
-.progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 2px;
-  background: var(--accent);
-  z-index: 200;
-  transition: width 0.1s;
+/* Stretch */
+.stretch{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03);
 }
+.stretch:last-child{border-bottom:none}
+.stretch-name{font-size:13px;font-weight:500;color:var(--text)}
+.stretch-dur{font-size:12px;color:var(--dim);font-weight:500;flex-shrink:0;margin-left:12px}
 
-/* MODAL */
-.modal-bg {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.93);
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  backdrop-filter: blur(8px);
+/* Modal */
+.modal{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.93);
+  z-index:1000;align-items:center;justify-content:center;padding:24px;
 }
-.modal-bg.show { display: flex; }
-
-.modal-card {
-  max-width: 360px;
-  width: 100%;
-  border-radius: 20px;
-  overflow: hidden;
-  background: var(--card);
-  border: 1px solid var(--card-border);
-  animation: popIn 0.2s ease;
+.modal.show{display:flex}
+.modal-inner{
+  max-width:340px;width:100%;border-radius:20px;overflow:hidden;
+  background:var(--card);border:1px solid var(--border);animation:pop 0.2s ease;
 }
-@keyframes popIn {
-  from { transform: scale(0.92); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-.modal-card img { width: 100%; display: block; }
-.modal-card .info { padding: 16px; }
-.modal-card .info h3 { font-size: 16px; font-weight: 700; }
-.modal-card .info p { font-size: 13px; color: var(--text-dim); margin-top: 3px; }
-
-.modal-x {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.08);
-  border: none;
-  color: #fff;
-  font-size: 18px;
-  cursor: pointer;
-  z-index: 1001;
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-.modal-bg.show + .modal-x,
-.modal-bg.show ~ .modal-x { display: flex; }
+@keyframes pop{from{transform:scale(0.92);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-inner img{width:100%;display:block}
+.modal-info{padding:14px 16px}
+.modal-info h3{font-size:16px;font-weight:700}
+.modal-info p{font-size:12px;color:var(--dim);margin-top:2px}
 </style>
 </head>
 <body>
 
-<div class="progress-bar" id="progressBar"></div>
-
 <div class="header">
-  <div class="brand">
-    <h1>BURN<span>FROM</span>HOME</h1>
-    <span class="day-label" id="dayLabel"></span>
+  <div class="top-row">
+    <div class="logo">BURN<span>FROM</span>HOME</div>
+    <div class="dur" id="dur"></div>
   </div>
-  <div class="days" id="dayTabs"></div>
+  <div class="days" id="tabs"></div>
 </div>
-
 <div class="content" id="content"></div>
 
-<div class="modal-bg" id="modal" onclick="closeModal()">
-  <div class="modal-card" onclick="event.stopPropagation()">
-    <img id="mImg" src="" alt="">
-    <div class="info">
-      <h3 id="mTitle"></h3>
-      <p id="mDetail"></p>
-    </div>
+<div class="modal" id="modal" onclick="closeModal()">
+  <div class="modal-inner" onclick="event.stopPropagation()">
+    <img id="mI" src="" alt="">
+    <div class="modal-info"><h3 id="mT"></h3><p id="mD"></p></div>
   </div>
 </div>
-<button class="modal-x" onclick="closeModal()">✕</button>
 
 <script>
-const G = {
-  'push-ups': 'https://static.exercisedb.dev/media/wbUYILZ.gif',
-  'air-squats': 'https://static.exercisedb.dev/media/BReCuOn.gif',
-  'sit-ups': 'https://static.exercisedb.dev/media/wnEscH8.gif',
-  'plank': 'https://static.exercisedb.dev/media/VBAWRPG.gif',
-  'dead-bug': 'https://static.exercisedb.dev/media/iny3m5y.gif',
-  'toe-taps': 'https://static.exercisedb.dev/media/p195zsJ.gif',
-  'rowing-machine': 'https://static.exercisedb.dev/media/7I6LNUG.gif',
-  'atg-split-squats': 'https://static.exercisedb.dev/media/QpXqiq8.gif',
-  'supermen': 'https://static.exercisedb.dev/media/4GqRrAk.gif',
-  'back-squats': 'https://static.exercisedb.dev/media/RYcV1kH.gif',
-  'squat-hold': 'https://static.exercisedb.dev/media/HbSG1Pw.gif',
-  'db-rows': 'https://static.exercisedb.dev/media/BJ0Hz5L.gif',
-  'db-bench-press': 'https://static.exercisedb.dev/media/SpYC0Kp.gif',
-  'lateral-raises': 'https://static.exercisedb.dev/media/dRTfGZT.gif',
-  'rear-delt-fly': 'https://static.exercisedb.dev/media/XUUD0Fs.gif',
-  'leg-raises': 'https://static.exercisedb.dev/media/UGhRD1A.gif',
-  'side-plank': 'https://static.exercisedb.dev/media/X6ytgYZ.gif',
-  'step-ups': 'https://static.exercisedb.dev/media/gFyFj9z.gif',
-  'high-knees': 'https://static.exercisedb.dev/media/ealLwvX.gif',
-  'bike': 'https://static.exercisedb.dev/media/H1PESYI.gif',
-  'lunges': 'https://static.exercisedb.dev/media/XalXcvM.gif',
-  'goblet-squat': 'https://static.exercisedb.dev/media/yn8yg1r.gif',
-  'tib-raises': 'https://static.exercisedb.dev/media/DEEqoI2.gif',
-  'calf-raises': 'https://static.exercisedb.dev/media/8ozhUIZ.gif',
-  'treadmill': 'https://static.exercisedb.dev/media/rjiM4L3.gif',
-  'burpees': 'https://static.exercisedb.dev/media/mr7pkqP.gif',
-  'sled-push': 'https://static.exercisedb.dev/media/XDOiFns.gif',
-  'deep-squat': 'https://static.exercisedb.dev/media/BReCuOn.gif',
-  'single-leg-balance': 'https://static.exercisedb.dev/media/wWFspEi.gif',
-  'walking-lunges': 'https://static.exercisedb.dev/media/J9zIWig.gif',
-  'scap-push-ups': 'https://static.exercisedb.dev/media/GdMa1ET.gif',
-  'jumping-jacks': 'https://static.exercisedb.dev/media/1g5bPpA.gif',
-  'db-shoulder-press': 'https://static.exercisedb.dev/media/1TkiAFK.gif',
-  'kb-deadlifts': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Kettlebell-Deadlift.gif',
-  'kb-deadlift': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Kettlebell-Deadlift.gif',
-  'glute-bridges': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Glute-Bridge.gif',
-  'db-rdl': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Romanian-Deadlift.gif',
-  'bulgarian-split-squats': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Bulgarian-Split-Squat.gif',
-  'band-pull-aparts': 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Band-Pull-Apart.gif',
-  'hip-hinges': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Good-Morning.gif',
-  'hip-thrusts': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Hip-Thrust.gif',
-  'good-mornings': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Good-Morning.gif',
-  'jefferson-curl': 'https://fitnessprogramer.com/wp-content/uploads/2022/02/Jefferson-Curl.gif',
-  'poliquin-step-downs': 'https://fitnessprogramer.com/wp-content/uploads/2022/04/Poliquin-Step-Up.gif',
-  'slantboard-squats': 'https://fitnessprogramer.com/wp-content/uploads/2022/04/ATG-Split-Squat.gif',
-  'calf-stretch': 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Calf-Stretch.gif',
+const G={
+'push-ups':'https://static.exercisedb.dev/media/wbUYILZ.gif',
+'air-squats':'https://static.exercisedb.dev/media/BReCuOn.gif',
+'sit-ups':'https://static.exercisedb.dev/media/wnEscH8.gif',
+'plank':'https://static.exercisedb.dev/media/VBAWRPG.gif',
+'dead-bug':'https://static.exercisedb.dev/media/iny3m5y.gif',
+'toe-taps':'https://static.exercisedb.dev/media/p195zsJ.gif',
+'rowing-machine':'https://static.exercisedb.dev/media/7I6LNUG.gif',
+'atg-split-squats':'https://static.exercisedb.dev/media/QpXqiq8.gif',
+'supermen':'https://static.exercisedb.dev/media/4GqRrAk.gif',
+'back-squats':'https://static.exercisedb.dev/media/RYcV1kH.gif',
+'squat-hold':'https://static.exercisedb.dev/media/HbSG1Pw.gif',
+'db-rows':'https://static.exercisedb.dev/media/BJ0Hz5L.gif',
+'db-bench-press':'https://static.exercisedb.dev/media/SpYC0Kp.gif',
+'lateral-raises':'https://static.exercisedb.dev/media/dRTfGZT.gif',
+'rear-delt-fly':'https://static.exercisedb.dev/media/XUUD0Fs.gif',
+'leg-raises':'https://static.exercisedb.dev/media/UGhRD1A.gif',
+'side-plank':'https://static.exercisedb.dev/media/X6ytgYZ.gif',
+'step-ups':'https://static.exercisedb.dev/media/gFyFj9z.gif',
+'high-knees':'https://static.exercisedb.dev/media/ealLwvX.gif',
+'bike':'https://static.exercisedb.dev/media/H1PESYI.gif',
+'lunges':'https://static.exercisedb.dev/media/XalXcvM.gif',
+'goblet-squat':'https://static.exercisedb.dev/media/yn8yg1r.gif',
+'tib-raises':'https://static.exercisedb.dev/media/DEEqoI2.gif',
+'calf-raises':'https://static.exercisedb.dev/media/8ozhUIZ.gif',
+'treadmill':'https://static.exercisedb.dev/media/rjiM4L3.gif',
+'burpees':'https://static.exercisedb.dev/media/mr7pkqP.gif',
+'sled-push':'https://static.exercisedb.dev/media/XDOiFns.gif',
+'deep-squat':'https://static.exercisedb.dev/media/BReCuOn.gif',
+'single-leg-balance':'https://static.exercisedb.dev/media/wWFspEi.gif',
+'walking-lunges':'https://static.exercisedb.dev/media/J9zIWig.gif',
+'scap-push-ups':'https://static.exercisedb.dev/media/GdMa1ET.gif',
+'jumping-jacks':'https://static.exercisedb.dev/media/1g5bPpA.gif',
+'db-shoulder-press':'https://static.exercisedb.dev/media/1TkiAFK.gif',
+'kb-deadlifts':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Kettlebell-Deadlift.gif',
+'kb-deadlift':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Kettlebell-Deadlift.gif',
+'glute-bridges':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Glute-Bridge.gif',
+'db-rdl':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Romanian-Deadlift.gif',
+'bulgarian-split-squats':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Bulgarian-Split-Squat.gif',
+'band-pull-aparts':'https://fitnessprogramer.com/wp-content/uploads/2021/06/Band-Pull-Apart.gif',
+'hip-hinges':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Good-Morning.gif',
+'hip-thrusts':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Hip-Thrust.gif',
+'good-mornings':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Good-Morning.gif',
+'jefferson-curl':'https://fitnessprogramer.com/wp-content/uploads/2022/02/Jefferson-Curl.gif',
+'poliquin-step-downs':'https://fitnessprogramer.com/wp-content/uploads/2022/04/Poliquin-Step-Up.gif',
+'slantboard-squats':'https://fitnessprogramer.com/wp-content/uploads/2022/04/ATG-Split-Squat.gif',
+'calf-stretch':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Calf-Stretch.gif',
 };
 
-function g(k){return G[k]||'';}
-function ex(n,d,k,b){return{name:n,detail:d,gif:g(k),badge:b||null};}
-
+// Flat exercise list per day. No blocks, no hierarchy. Just: phase → exercises in order.
 const DAYS = {
   monday: {
-    title:'Monday', subtitle:'Met Con / Team Challenge', duration:'30 min',
-    sections: [
-      { name:'Warm Up', time:'4 min', type:'warmup', exercises:[
-        ex('Fast Toe Taps','20 reps','toe-taps'),
-        ex('Air Squats','10 reps','air-squats'),
-        ex('Push-Ups','10 reps','push-ups'),
-        ex('KB Deadlifts','10 reps','kb-deadlifts'),
+    title:'Met Con / Team Challenge', duration:'30 min',
+    phases: [
+      { label:'Warm Up', type:'warmup', items:[
+        {n:'Fast Toe Taps',r:'20 reps',g:'toe-taps'},
+        {n:'Air Squats',r:'10 reps',g:'air-squats'},
+        {n:'Push-Ups',r:'10 reps',g:'push-ups'},
+        {n:'KB Deadlifts',r:'10 reps',g:'kb-deadlifts'},
       ]},
-      { name:'Block A: Engine', time:'10 min', type:'cardio', exercises:[
-        ex('Row / Ski / Bike','45s hard / 75s easy x 5','rowing-machine','cardio'),
-      ]},
-      { name:'Block B: Bodyweight Density', time:'10 min AMRAP', type:'strength', exercises:[
-        ex('Push-Ups','10 reps','push-ups'),
-        ex('Air Squats','15 reps','air-squats'),
-        ex('Sit-Ups','20 reps','sit-ups'),
-      ]},
-      { name:'Block C: Core Flush', time:'10 min / 3 rounds', type:'core', exercises:[
-        ex('Plank','30 seconds','plank'),
-        ex('Dead Bug','10 per side','dead-bug'),
-        ex('Easy Walk','60 seconds','','recovery'),
-      ]},
-      { name:'Stretching', time:'5 min', type:'stretch', isStretch:true, stretches:[
-        {name:'Chest Doorway Stretch',dur:'30s each side'},
-        {name:'Quad Stretch',dur:'30s each leg'},
-        {name:'Hip Flexor Stretch',dur:'30s each side'},
-        {name:'Cat-Cow',dur:'10 slow reps'},
-        {name:"Child's Pose",dur:'30s'},
-        {name:'Calf Stretch',dur:'20s each side'},
+      { label:'Workout', type:'workout', items:[
+        {n:'Row / Ski / Bike',r:'45s hard / 75s easy x 5 rounds',g:'rowing-machine'},
+        {n:'Push-Ups',r:'10 reps (AMRAP cycle)',g:'push-ups'},
+        {n:'Air Squats',r:'15 reps (AMRAP cycle)',g:'air-squats'},
+        {n:'Sit-Ups',r:'20 reps (AMRAP cycle)',g:'sit-ups'},
+        {n:'Plank',r:'30 sec x 3 rounds',g:'plank'},
+        {n:'Dead Bug',r:'10 per side x 3 rounds',g:'dead-bug'},
+        {n:'Easy Walk',r:'60 sec between rounds',g:''},
+      ], note:'AMRAP for 10 min, then 3 rounds of core.'},
+      { label:'Stretch', type:'stretch', stretches:[
+        {n:'Chest Doorway Stretch',d:'30s each side'},
+        {n:'Quad Stretch',d:'30s each leg'},
+        {n:'Hip Flexor Stretch',d:'30s each side'},
+        {n:'Cat-Cow',d:'10 slow reps'},
+        {n:"Child's Pose",d:'30s'},
+        {n:'Calf Stretch',d:'20s each side'},
       ]},
     ]
   },
   tuesday: {
-    title:'Tuesday', subtitle:'Lower Body Strength', duration:'45 min',
-    sections: [
-      { name:'Warm Up', time:'5 min', type:'warmup', exercises:[
-        ex('ATG Split Squats','2x10 each leg','atg-split-squats'),
-        ex('Single-Leg Glute Bridges','2x10 each leg','glute-bridges'),
-        ex('Lying Supermen','2x10','supermen'),
+    title:'Lower Body Strength', duration:'45 min',
+    phases: [
+      { label:'Warm Up', type:'warmup', items:[
+        {n:'ATG Split Squats',r:'2 x 10 each leg',g:'atg-split-squats'},
+        {n:'Single-Leg Glute Bridges',r:'2 x 10 each leg',g:'glute-bridges'},
+        {n:'Lying Supermen',r:'2 x 10',g:'supermen'},
       ]},
-      { name:'Station 1: Barbell Squats', time:'7 min', type:'strength', note:'Partner Rest, Swap. 2-3 Sets.', exercises:[
-        ex('Back Squats','8-12 reps','back-squats'),
-      ]},
-      { name:'Station 2: Trap Bar + DB RDL', time:'7 min', type:'strength', note:'Superset. Partner Rest, Swap. 2-3 Sets.', exercises:[
-        ex('KB Deadlift','6-10 reps','kb-deadlift','superset'),
-        ex('DB RDL','10-15 reps','db-rdl','superset'),
-        ex('Sled Push','15-20m','sled-push','optional'),
-      ]},
-      { name:'Station 3: Bulgarian Split Squats', time:'7 min', type:'strength', note:'2-3 Sets.', exercises:[
-        ex('Bulgarian Split Squats','8-12 per leg','bulgarian-split-squats'),
-      ]},
-      { name:'Station 4: Lunges + Squat Hold', time:'7 min', type:'strength', note:'Swap. Rest 60-90s. 2-3 Sets.', exercises:[
-        ex('DB Walking Lunges','12-16 per leg','walking-lunges'),
-        ex('Squat Hold','While partner lunges','squat-hold'),
-      ]},
-      { name:'Stretching', time:'5-7 min', type:'stretch', isStretch:true, stretches:[
-        {name:'Deep Squat Hold',dur:'45s'},
-        {name:'Pigeon Stretch',dur:'30s each side'},
-        {name:'Standing Quad Stretch',dur:'30s each leg'},
-        {name:'Hamstring Stretch',dur:'30s each leg'},
-        {name:'Hip Flexor Lunge Stretch',dur:'30s each side'},
-        {name:'Calf Stretch',dur:'20s each side'},
+      { label:'Workout', type:'workout', items:[
+        {n:'Back Squats',r:'8-12 reps x 2-3 sets',g:'back-squats'},
+        {n:'KB Deadlift',r:'6-10 reps x 2-3 sets',g:'kb-deadlift',tag:'superset'},
+        {n:'DB RDL',r:'10-15 reps x 2-3 sets',g:'db-rdl',tag:'superset'},
+        {n:'Sled Push',r:'15-20m',g:'sled-push',tag:'optional'},
+        {n:'Bulgarian Split Squats',r:'8-12 per leg x 2-3 sets',g:'bulgarian-split-squats'},
+        {n:'DB Walking Lunges',r:'12-16 per leg x 2-3 sets',g:'walking-lunges'},
+        {n:'Squat Hold',r:'Hold while partner works',g:'squat-hold'},
+      ], note:'Rest 60-90s between sets. Partner swap format.'},
+      { label:'Stretch', type:'stretch', stretches:[
+        {n:'Deep Squat Hold',d:'45s'},
+        {n:'Pigeon Stretch',d:'30s each side'},
+        {n:'Standing Quad Stretch',d:'30s each leg'},
+        {n:'Hamstring Stretch',d:'30s each leg'},
+        {n:'Hip Flexor Lunge Stretch',d:'30s each side'},
+        {n:'Calf Stretch',d:'20s each side'},
       ]},
     ]
   },
   wednesday: {
-    title:'Wednesday', subtitle:'Upper Engine + Hypertrophy', duration:'34 min',
-    sections: [
-      { name:'Warm Up', time:'4 min', type:'warmup', exercises:[
-        ex('Scap Push-Ups','10 reps','scap-push-ups'),
-        ex('Band Pull-Aparts','10 reps','band-pull-aparts'),
-        ex('Light DB Rows','10 each arm','db-rows'),
-        ex('Slow Push-Ups','10 reps','push-ups'),
+    title:'Upper Engine + Hypertrophy', duration:'34 min',
+    phases: [
+      { label:'Warm Up', type:'warmup', items:[
+        {n:'Scap Push-Ups',r:'10 reps',g:'scap-push-ups'},
+        {n:'Band Pull-Aparts',r:'10 reps',g:'band-pull-aparts'},
+        {n:'Light DB Rows',r:'10 each arm',g:'db-rows'},
+        {n:'Slow Push-Ups',r:'10 reps',g:'push-ups'},
       ]},
-      { name:'A: Upper Strength', time:'10 min / 3 rounds', type:'strength', note:'Rest 60 sec.', exercises:[
-        ex('DB Bench Press','10 reps','db-bench-press'),
-        ex('DB Row','12 each arm','db-rows'),
-      ]},
-      { name:'B: Shoulder & Upper Back', time:'10 min / 3 rounds', type:'strength', note:'Rest 45-60 sec.', exercises:[
-        ex('Lateral Raises','10-12 reps','lateral-raises'),
-        ex('Rear Delt Fly','12-15 reps','rear-delt-fly'),
-      ]},
-      { name:'C: Core', time:'10 min / 3 rounds', type:'core', note:'Rest 45 sec.', exercises:[
-        ex('Sit-Ups','20 reps','sit-ups'),
-        ex('Leg Raises','10-15 reps','leg-raises'),
-        ex('Side Plank','30 sec each side','side-plank'),
-      ]},
-      { name:'Stretching', time:'5 min', type:'stretch', isStretch:true, stretches:[
-        {name:'Chest Doorway Stretch',dur:'30s each side'},
-        {name:'Cross-Body Shoulder Stretch',dur:'20s each arm'},
-        {name:'Overhead Tricep Stretch',dur:'20s each arm'},
-        {name:'Cobra Stretch',dur:'30s'},
-        {name:'Cat-Cow',dur:'10 slow reps'},
-        {name:"Child's Pose",dur:'30s'},
+      { label:'Workout', type:'workout', items:[
+        {n:'DB Bench Press',r:'10 reps x 3 rounds',g:'db-bench-press'},
+        {n:'DB Row',r:'12 each arm x 3 rounds',g:'db-rows'},
+        {n:'Lateral Raises',r:'10-12 reps x 3 rounds',g:'lateral-raises'},
+        {n:'Rear Delt Fly',r:'12-15 reps x 3 rounds',g:'rear-delt-fly'},
+        {n:'Sit-Ups',r:'20 reps x 3 rounds',g:'sit-ups'},
+        {n:'Leg Raises',r:'10-15 reps x 3 rounds',g:'leg-raises'},
+        {n:'Side Plank',r:'30 sec each side x 3 rounds',g:'side-plank'},
+      ], note:'Rest 45-60 sec between rounds.'},
+      { label:'Stretch', type:'stretch', stretches:[
+        {n:'Chest Doorway Stretch',d:'30s each side'},
+        {n:'Cross-Body Shoulder Stretch',d:'20s each arm'},
+        {n:'Overhead Tricep Stretch',d:'20s each arm'},
+        {n:'Cobra Stretch',d:'30s'},
+        {n:'Cat-Cow',d:'10 slow reps'},
+        {n:"Child's Pose",d:'30s'},
       ]},
     ]
   },
   thursday: {
-    title:'Thursday', subtitle:'Legs & Lungs', duration:'30 min',
-    sections: [
-      { name:'Warm Up', time:'4 min', type:'warmup', exercises:[
-        ex('Step-Ups','10 each leg','step-ups'),
-        ex('Hip Hinges','10 reps','hip-hinges'),
-        ex('Jumping Jacks','10 reps','jumping-jacks'),
-        ex('High Knees','20 reps','high-knees'),
+    title:'Legs & Lungs', duration:'30 min',
+    phases: [
+      { label:'Warm Up', type:'warmup', items:[
+        {n:'Step-Ups',r:'10 each leg',g:'step-ups'},
+        {n:'Hip Hinges',r:'10 reps',g:'hip-hinges'},
+        {n:'Jumping Jacks',r:'10 reps',g:'jumping-jacks'},
+        {n:'High Knees',r:'20 reps',g:'high-knees'},
       ]},
-      { name:'A: Moderate Engine', time:'10 min', type:'cardio', exercises:[
-        ex('Bike, Row, or Ski','Steady pace','bike','cardio'),
-      ]},
-      { name:'B: Lower Accessories', time:'15 min / 3 rounds', type:'strength', note:'Rest 60 sec.', exercises:[
-        ex('Hip Thrusts','12 reps','hip-thrusts'),
-        ex('DB RDL','15 reps','db-rdl'),
-        ex('Step-Ups','12 each leg','step-ups'),
-      ]},
-      { name:'Cooldown', time:'5 min', type:'warmup', exercises:[
-        ex('Easy Walk / Light Bike','Bring HR down','','recovery'),
-      ]},
-      { name:'Stretching', time:'5-7 min', type:'stretch', isStretch:true, stretches:[
-        {name:'Hamstring Stretch',dur:'30s each leg'},
-        {name:'Hip Flexor Lunge Stretch',dur:'30s each side'},
-        {name:'Pigeon Stretch',dur:'30s each side'},
-        {name:'Standing Quad Stretch',dur:'30s each leg'},
-        {name:'Butterfly Stretch',dur:'30s'},
-        {name:'Supine Spinal Twist',dur:'20s each side'},
+      { label:'Workout', type:'workout', items:[
+        {n:'Bike, Row, or Ski',r:'10 min steady pace',g:'bike'},
+        {n:'Hip Thrusts',r:'12 reps x 3 rounds',g:'hip-thrusts'},
+        {n:'DB RDL',r:'15 reps x 3 rounds',g:'db-rdl'},
+        {n:'Step-Ups',r:'12 each leg x 3 rounds',g:'step-ups'},
+      ], note:'Rest 60 sec between rounds. 5 min cooldown walk after.'},
+      { label:'Stretch', type:'stretch', stretches:[
+        {n:'Hamstring Stretch',d:'30s each leg'},
+        {n:'Hip Flexor Lunge Stretch',d:'30s each side'},
+        {n:'Pigeon Stretch',d:'30s each side'},
+        {n:'Standing Quad Stretch',d:'30s each leg'},
+        {n:'Butterfly Stretch',d:'30s'},
+        {n:'Supine Spinal Twist',d:'20s each side'},
       ]},
     ]
   },
   friday: {
-    title:'Friday', subtitle:'3 Station Race', duration:'23 min',
-    sections: [
-      { name:'Warm Up', time:'5 min', type:'warmup', exercises:[
-        ex('Easy Jog / Machine','200m','treadmill'),
-        ex('Air Squats','20 reps','air-squats'),
-        ex('Alternating Lunges','20 reps','lunges'),
-        ex('Plank','30 seconds','plank'),
-        ex('Toe Taps','20 reps','toe-taps'),
+    title:'3 Station Race', duration:'23 min',
+    phases: [
+      { label:'Warm Up', type:'warmup', items:[
+        {n:'Easy Jog / Machine',r:'200m',g:'treadmill'},
+        {n:'Air Squats',r:'20 reps',g:'air-squats'},
+        {n:'Alternating Lunges',r:'20 reps',g:'lunges'},
+        {n:'Plank',r:'30 sec',g:'plank'},
+        {n:'Toe Taps',r:'20 reps',g:'toe-taps'},
       ]},
-      { name:'Station 1: Engine', time:'6 min', type:'cardio', note:'Max calories. One athlete at a time.', exercises:[
-        ex('Any Machine','Rower, Ski, Bike','rowing-machine','maxeffort'),
-      ]},
-      { name:'Station 2: Core Gauntlet', time:'6 min', type:'core', note:'3x1 min work + 1 min rest, then 2x1 min work.', exercises:[
-        ex('Core Work Block 1','3x1 min + 1 min rest','sit-ups'),
-        ex('Core Work Block 2','2x1 min','plank'),
-      ]},
-      { name:'Station 3: Treadmill', time:'6 min', type:'cardio', note:'Max distance. One runner, swap freely.', exercises:[
-        ex('Treadmill Sprint','Max distance in 6 min','treadmill','maxeffort'),
-      ]},
-      { name:'Stretching', time:'5 min', type:'stretch', isStretch:true, stretches:[
-        {name:'Deep Squat Hold',dur:'30s'},
-        {name:'Hamstring Stretch',dur:'30s each leg'},
-        {name:'Hip Flexor Stretch',dur:'30s each side'},
-        {name:'Cobra Stretch',dur:'30s'},
-        {name:'Spinal Twist',dur:'20s each side'},
-        {name:'Deep Breathing',dur:'60s'},
+      { label:'Workout', type:'workout', items:[
+        {n:'Machine (Rower/Ski/Bike)',r:'6 min max calories',g:'rowing-machine'},
+        {n:'Core Work',r:'3x1 min on, 1 min rest, then 2x1 min',g:'sit-ups'},
+        {n:'Treadmill Sprint',r:'6 min max distance',g:'treadmill'},
+      ], note:'Teams rotate every 6 min. One person works at a time.'},
+      { label:'Stretch', type:'stretch', stretches:[
+        {n:'Deep Squat Hold',d:'30s'},
+        {n:'Hamstring Stretch',d:'30s each leg'},
+        {n:'Hip Flexor Stretch',d:'30s each side'},
+        {n:'Cobra Stretch',d:'30s'},
+        {n:'Spinal Twist',d:'20s each side'},
+        {n:'Deep Breathing',d:'60s'},
       ]},
     ]
   },
   saturday: {
-    title:'Saturday', subtitle:'Lead Self Training', duration:'20 min',
-    sections: [
-      { name:'Block A: Lower Body Strength', time:'8 min / 2-3 rounds', type:'strength', note:'Rest 60 sec. Squat + hinge focus.', exercises:[
-        ex('Goblet Squat','10-12 reps','goblet-squat'),
-        ex('KB or DB RDL','10-12 reps','db-rdl'),
-      ]},
-      { name:'Block B: Upper Push/Pull', time:'6 min / 2 rounds', type:'strength', note:'Rest 45-60 sec.', exercises:[
-        ex('DB Shoulder Press','10-12 reps','db-shoulder-press'),
-        ex('DB Row','10-12 each side','db-rows'),
-      ]},
-      { name:'Block C: Core Stability', time:'6 min / 2 rounds', type:'core', note:'Rest 45 sec.', exercises:[
-        ex('Sit-Ups','15-20 reps','sit-ups'),
-        ex('Dead Bugs','10-15 each side','dead-bug'),
-        ex('Plank','30-40 sec','plank'),
-      ]},
-      { name:'Stretching', time:'5 min', type:'stretch', isStretch:true, stretches:[
-        {name:'Deep Squat Hold',dur:'30s'},
-        {name:'Hamstring Stretch',dur:'30s each leg'},
-        {name:'Cross-Body Shoulder Stretch',dur:'20s each arm'},
-        {name:'Cat-Cow',dur:'10 reps'},
-        {name:"Child's Pose",dur:'30s'},
+    title:'Lead Self Training', duration:'20 min',
+    phases: [
+      { label:'Workout', type:'workout', items:[
+        {n:'Goblet Squat',r:'10-12 reps x 2-3 rounds',g:'goblet-squat'},
+        {n:'KB or DB RDL',r:'10-12 reps x 2-3 rounds',g:'db-rdl'},
+        {n:'DB Shoulder Press',r:'10-12 reps x 2 rounds',g:'db-shoulder-press'},
+        {n:'DB Row',r:'10-12 each side x 2 rounds',g:'db-rows'},
+        {n:'Sit-Ups',r:'15-20 reps x 2 rounds',g:'sit-ups'},
+        {n:'Dead Bugs',r:'10-15 each side x 2 rounds',g:'dead-bug'},
+        {n:'Plank',r:'30-40 sec x 2 rounds',g:'plank'},
+      ], note:'Rest 45-60 sec between rounds.'},
+      { label:'Stretch', type:'stretch', stretches:[
+        {n:'Deep Squat Hold',d:'30s'},
+        {n:'Hamstring Stretch',d:'30s each leg'},
+        {n:'Cross-Body Shoulder Stretch',d:'20s each arm'},
+        {n:'Cat-Cow',d:'10 reps'},
+        {n:"Child's Pose",d:'30s'},
       ]},
     ]
   },
   sunday: {
-    title:'Sunday', subtitle:'KOT Recovery', duration:'30 min',
-    sections: [
-      { name:'Warm Up', time:'5 min', type:'warmup', exercises:[
-        ex('Ankle Rocks','30 sec each leg',''),
-        ex('Patrick Step-Backs','10 each side',''),
-        ex('Tib Raises','12 reps','tib-raises'),
-        ex('Deep Squat Sit','30 sec','deep-squat'),
-        ex('Slow Good Mornings','10 reps','good-mornings'),
+    title:'KOT Recovery', duration:'30 min',
+    phases: [
+      { label:'Warm Up', type:'warmup', items:[
+        {n:'Ankle Rocks',r:'30 sec each leg',g:''},
+        {n:'Patrick Step-Backs',r:'10 each side',g:''},
+        {n:'Tib Raises',r:'12 reps',g:'tib-raises'},
+        {n:'Deep Squat Sit',r:'30 sec',g:'deep-squat'},
+        {n:'Slow Good Mornings',r:'10 reps',g:'good-mornings'},
       ]},
-      { name:'ATG Split Squat Progression', time:'7 min / 3 rounds', type:'strength', note:'4s descent, 2s pause. Rest 20-30s.', exercises:[
-        ex('ATG Split Squats','8-10 each leg','atg-split-squats'),
-      ]},
-      { name:'Tibialis + Ankle Capacity', time:'5 min / 3 rounds', type:'strength', note:'Rest 30-45 sec.', exercises:[
-        ex('Tib Raises','15-20 reps','tib-raises'),
-        ex('Calf Stretch','20-30 sec','calf-stretch'),
-        ex('Single-Leg Calf Raises','15 reps slow','calf-raises'),
-      ]},
-      { name:'Step-Downs + Squat Depth', time:'5 min / 3 rounds', type:'strength', note:'5s eccentric. Rest 45-60 sec.', exercises:[
-        ex('Poliquin Step-Downs','10-12 each side','poliquin-step-downs'),
-        ex('Slantboard Squats','6-8 reps','slantboard-squats'),
-      ]},
-      { name:'Jefferson Curl + Posterior', time:'4 min / 3 rounds', type:'strength', note:'No rushing. 3s down / 1s up.', exercises:[
-        ex('Jefferson Curls','8-10 very light','jefferson-curl'),
-        ex('Tempo Good Mornings','8-10 reps','good-mornings'),
-      ]},
-      { name:'Balance + Isometrics', time:'4 min / 2 rounds', type:'core', note:'Barefoot. Progress: eyes closed.', exercises:[
-        ex('Single-Leg Balance','30 sec','single-leg-balance'),
-        ex('Deep Split Squat Hold','20 sec each side','atg-split-squats'),
-        ex('Deep Squat Breathing','30 sec','deep-squat'),
-      ]},
-      { name:'Cooldown Flow', time:'4 min', type:'stretch', isStretch:true, stretches:[
-        {name:'Deep Squat Hold',dur:'30s'},
-        {name:'Pigeon Stretch',dur:'30s each side'},
-        {name:'Hamstring Stretch',dur:'30s'},
-        {name:'Hip Flexor Stretch',dur:'30s each side'},
-        {name:'Nasal Breathing',dur:'Throughout'},
+      { label:'Workout', type:'workout', items:[
+        {n:'ATG Split Squats',r:'8-10 each leg x 3 rounds (4s down, 2s pause)',g:'atg-split-squats'},
+        {n:'Tib Raises',r:'15-20 reps x 3 rounds',g:'tib-raises'},
+        {n:'Calf Stretch',r:'20-30 sec x 3 rounds',g:'calf-stretch'},
+        {n:'Single-Leg Calf Raises',r:'15 reps slow x 3 rounds',g:'calf-raises'},
+        {n:'Poliquin Step-Downs',r:'10-12 each side x 3 rounds',g:'poliquin-step-downs'},
+        {n:'Slantboard Squats',r:'6-8 reps, 5s eccentric x 3 rounds',g:'slantboard-squats'},
+        {n:'Jefferson Curls',r:'8-10 very light x 3 rounds',g:'jefferson-curl'},
+        {n:'Tempo Good Mornings',r:'8-10 reps (3s down / 1s up) x 3 rounds',g:'good-mornings'},
+        {n:'Single-Leg Balance',r:'30 sec x 2 rounds',g:'single-leg-balance'},
+        {n:'Deep Split Squat Hold',r:'20 sec each side x 2 rounds',g:'atg-split-squats'},
+        {n:'Deep Squat Breathing',r:'30 sec x 2 rounds',g:'deep-squat'},
+      ], note:'No rushing. Focus on control and range.'},
+      { label:'Cooldown', type:'stretch', stretches:[
+        {n:'Deep Squat Hold',d:'30s'},
+        {n:'Pigeon Stretch',d:'30s each side'},
+        {n:'Hamstring Stretch',d:'30s'},
+        {n:'Hip Flexor Stretch',d:'30s each side'},
+        {n:'Nasal Breathing',d:'Throughout'},
       ]},
     ]
   }
 };
 
-const dayOrder = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
-const dayLabels = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-let activeDay = dayOrder[new Date().getDay()===0?6:new Date().getDay()-1];
+const dayOrder=['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+const dayLabels=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+let active=dayOrder[new Date().getDay()===0?6:new Date().getDay()-1];
 
-function renderTabs() {
-  document.getElementById('dayTabs').innerHTML = dayOrder.map((d,i) =>
-    `<button class="day-btn ${d===activeDay?'active':''}" onclick="selectDay('${d}')">${dayLabels[i]}</button>`
+function renderTabs(){
+  document.getElementById('tabs').innerHTML=dayOrder.map((d,i)=>
+    `<button class="day-btn ${d===active?'active':''}" onclick="sel('${d}')">${dayLabels[i]}</button>`
   ).join('');
-  const day = DAYS[activeDay];
-  document.getElementById('dayLabel').textContent = day.duration;
+  document.getElementById('dur').textContent=DAYS[active].duration;
 }
 
-function selectDay(d) {
-  activeDay = d;
-  renderTabs();
-  renderContent();
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+function sel(d){active=d;renderTabs();render();window.scrollTo({top:0,behavior:'smooth'})}
 
-function toggleBlock(i) {
-  document.getElementById('b'+i).classList.toggle('open');
-}
+function render(){
+  const day=DAYS[active];
+  let h=`<div class="day-head"><h2>${day.title}</h2><p>${day.duration}</p></div>`;
 
-function renderContent() {
-  const day = DAYS[activeDay];
-  let h = `<div class="day-intro"><h2>${day.subtitle}</h2>
-    <div class="meta">
-      <div class="meta-item">⏱ ${day.duration}</div>
-      <div class="meta-item">${day.sections.length} blocks</div>
-    </div>
-  </div><div class="flow">`;
+  day.phases.forEach(p=>{
+    // Phase divider
+    h+=`<div class="phase phase-${p.type}"><div class="phase-line"></div><span class="phase-label">${p.label}</span><div class="phase-line"></div></div>`;
 
-  day.sections.forEach((s,i) => {
-    h += `<div class="block open" id="b${i}">`;
-    h += `<div class="block-header" onclick="toggleBlock(${i})">`;
-    h += `<div class="block-dot dot-${s.type}"></div>`;
-    h += `<div class="block-info"><div class="block-name">${s.name}</div><div class="block-time">${s.time}</div></div>`;
-    h += `<span class="block-chevron">▾</span>`;
-    h += `</div>`;
-    h += `<div class="block-body">`;
-    
-    if (s.note) h += `<div class="block-note">${s.note}</div>`;
-    
-    if (s.isStretch) {
-      h += `<div class="stretch-list">`;
-      s.stretches.forEach(st => {
-        h += `<div class="stretch-item"><div class="stretch-bullet"></div><span class="stretch-name">${st.name}</span><span class="stretch-dur">${st.dur}</span></div>`;
+    if(p.note) h+=`<div class="note">${p.note}</div>`;
+
+    if(p.stretches){
+      p.stretches.forEach(s=>{
+        h+=`<div class="stretch"><span class="stretch-name">${s.n}</span><span class="stretch-dur">${s.d}</span></div>`;
       });
-      h += `</div>`;
     } else {
-      s.exercises.forEach(e => {
-        h += `<div class="exercise">`;
-        h += `<div class="ex-gif" ${e.gif?`onclick="openModal('${e.gif.replace(/'/g,"\\'")}','${e.name.replace(/'/g,"\\'")}','${e.detail.replace(/'/g,"\\'")}')"`:''}>`;
-        if (e.gif) h += `<img src="${e.gif}" alt="${e.name}" loading="lazy" onerror="this.outerHTML='<div class=ph>${e.name}</div>'">`;
-        else h += `<div class="ph">${e.name}</div>`;
-        h += `</div>`;
-        h += `<div class="ex-info"><div class="ex-name">${e.name}</div><div class="ex-detail">${e.detail}</div>`;
-        if (e.badge) h += `<span class="ex-badge badge-${e.badge}">${e.badge}</span>`;
-        h += `</div></div>`;
+      p.items.forEach(e=>{
+        const src=G[e.g]||'';
+        h+=`<div class="ex">`;
+        h+=`<div class="ex-thumb" ${src?`onclick="modal('${src.replace(/'/g,"\\'")}','${e.n.replace(/'/g,"\\'")}','${e.r.replace(/'/g,"\\'")}')"`:''}>`;
+        if(src) h+=`<img src="${src}" alt="${e.n}" loading="lazy" onerror="this.outerHTML='<div class=ph>${e.n}</div>'">`;
+        else h+=`<div class="ph">${e.n}</div>`;
+        h+=`</div><div class="ex-main"><div class="ex-name">${e.n}</div><div class="ex-reps">${e.r}</div>`;
+        if(e.tag) h+=`<span class="ex-tag tag-${e.tag}">${e.tag}</span>`;
+        h+=`</div></div>`;
       });
     }
-    h += `</div></div>`;
   });
 
-  h += `</div>`;
-  document.getElementById('content').innerHTML = h;
+  document.getElementById('content').innerHTML=h;
 }
 
-// Scroll progress
-window.addEventListener('scroll', () => {
-  const h = document.documentElement;
-  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-  document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
-});
-
-function openModal(src,name,detail) {
-  if(!src) return;
-  document.getElementById('mImg').src = src;
-  document.getElementById('mTitle').textContent = name;
-  document.getElementById('mDetail').textContent = detail;
+function modal(s,n,d){
+  if(!s)return;
+  document.getElementById('mI').src=s;
+  document.getElementById('mT').textContent=n;
+  document.getElementById('mD').textContent=d;
   document.getElementById('modal').classList.add('show');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
-function closeModal() {
+function closeModal(){
   document.getElementById('modal').classList.remove('show');
-  document.body.style.overflow = '';
+  document.body.style.overflow='';
 }
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+document.getElementById('modal').addEventListener('click',closeModal);
 
-renderTabs();
-renderContent();
+renderTabs();render();
 </script>
 </body>
 </html>
