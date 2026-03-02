@@ -1,0 +1,52 @@
+{
+  "push up": {
+    "name": "elbow lift - reverse push-up",
+    "gif": "https://static.exercisedb.dev/media/wbUYILZ.gif",
+    "id": "wbUYILZ"
+  },
+  "air squat": {
+    "name": "smith chair squat",
+    "gif": "https://static.exercisedb.dev/media/Gu2rNJd.gif",
+    "id": "Gu2rNJd"
+  },
+  "sit up": {
+    "name": "flexion leg sit up (bent knee)",
+    "gif": "https://static.exercisedb.dev/media/AR0ig3o.gif",
+    "id": "AR0ig3o"
+  },
+  "plank": {
+    "name": "dumbbell side plank with rear fly",
+    "gif": "https://static.exercisedb.dev/media/X6ytgYZ.gif",
+    "id": "X6ytgYZ"
+  },
+  "dead bug": {
+    "name": "dead bug",
+    "gif": "https://static.exercisedb.dev/media/iny3m5y.gif",
+    "id": "iny3m5y"
+  },
+  "toe tap": {
+    "name": "two toe touch (male)",
+    "gif": "https://static.exercisedb.dev/media/p195zsJ.gif",
+    "id": "p195zsJ"
+  },
+  "kettlebell deadlift": {
+    "name": "kettlebell alternating row",
+    "gif": "https://static.exercisedb.dev/media/Ca76jUE.gif",
+    "id": "Ca76jUE"
+  },
+  "rowing machine": {
+    "name": "ski ergometer",
+    "gif": "https://static.exercisedb.dev/media/vpQaQkH.gif",
+    "id": "vpQaQkH"
+  },
+  "split squat": {
+    "name": "split squats",
+    "gif": "https://static.exercisedb.dev/media/9E25EOx.gif",
+    "id": "9E25EOx"
+  },
+  "glute bridge": {
+    "name": "barbell glute bridge",
+    "gif": "https://static.exercisedb.dev/media/qKBpF7I.gif",
+    "id": "qKBpF7I"
+  }
+}
