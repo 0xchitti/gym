@@ -19,14 +19,12 @@
   --border-light:rgba(255,255,255,0.1);
   --accent:#c8ff00;
   --accent-dim:rgba(200,255,0,0.1);
-  --accent-mid:rgba(200,255,0,0.25);
   --text:#f0f0f0;
   --text-2:#999;
   --text-3:#555;
   --warmup:#ff9f43;
   --workout:#c8ff00;
   --stretch:#38d9a9;
-  --red:#ff4757;
   --safe-top:env(safe-area-inset-top,0px);
   --safe-bottom:env(safe-area-inset-bottom,0px);
 }
@@ -38,15 +36,14 @@ body{
   padding-top:var(--safe-top);padding-bottom:var(--safe-bottom);
 }
 
-/* === HEADER === */
+/* HEADER */
 .header{
   position:sticky;top:0;z-index:100;
   background:rgba(10,10,10,0.85);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
   border-bottom:1px solid var(--border);
   padding:calc(var(--safe-top) + 14px) 20px 0;
 }
-.top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.logo{display:flex;align-items:center;gap:10px}
+.top-row{display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .logo-icon{
   width:32px;height:32px;border-radius:8px;
   background:var(--accent);display:flex;align-items:center;justify-content:center;
@@ -54,17 +51,7 @@ body{
 }
 .logo-text{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;letter-spacing:-0.5px}
 .logo-text span{color:var(--accent)}
-.start-btn{
-  padding:8px 18px;border-radius:100px;border:none;
-  background:var(--accent);color:#0a0a0a;font-family:'Space Grotesk',sans-serif;
-  font-size:13px;font-weight:700;cursor:pointer;
-  transition:all 0.2s;letter-spacing:-0.2px;
-}
-.start-btn:active{transform:scale(0.94);opacity:0.85}
-.start-btn.active-workout{background:var(--red);color:#fff;animation:pulse-btn 2s infinite}
-@keyframes pulse-btn{0%,100%{box-shadow:0 0 0 0 rgba(255,71,87,0.3)}50%{box-shadow:0 0 0 10px rgba(255,71,87,0)}}
 
-/* DAY TABS */
 .days{display:flex;gap:6px;padding-bottom:14px;overflow-x:auto;scrollbar-width:none}
 .days::-webkit-scrollbar{display:none}
 .day-btn{
@@ -74,19 +61,12 @@ body{
   display:flex;flex-direction:column;align-items:center;gap:4px;
 }
 .day-btn.active{background:var(--surface-2);color:var(--text)}
-.day-btn .day-dot{
-  width:4px;height:4px;border-radius:50%;background:transparent;transition:all 0.25s;
-}
+.day-btn .day-dot{width:4px;height:4px;border-radius:50%;background:transparent;transition:all 0.25s}
 .day-btn.active .day-dot{background:var(--accent)}
-.day-btn.completed .day-dot{background:var(--stretch)}
 
-/* === PROGRESS === */
-.progress-wrap{height:2px;background:var(--border)}
-.progress-bar{height:100%;background:var(--accent);border-radius:0 1px 1px 0;transition:width 0.4s ease;width:0}
-
-/* === CONTENT === */
+/* CONTENT */
 .content-wrap{position:relative;overflow:hidden}
-.content{padding:0 20px 120px;transition:transform 0.3s ease,opacity 0.3s ease}
+.content{padding:0 20px 100px;transition:transform 0.3s ease,opacity 0.3s ease}
 .content.slide-left{transform:translateX(-40px);opacity:0}
 .content.slide-right{transform:translateX(40px);opacity:0}
 
@@ -100,7 +80,7 @@ body{
 .day-meta{font-size:12px;color:var(--text-3);margin-top:8px;display:flex;gap:12px;align-items:center}
 .day-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--text-3)}
 
-/* === PHASE === */
+/* PHASE */
 .phase-section{margin-top:28px}
 .phase-header{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .phase-line{height:1px;flex:1;background:var(--border)}
@@ -114,23 +94,14 @@ body{
 .phase-tag.stretch{background:rgba(56,217,169,0.1);color:var(--stretch);border:1px solid rgba(56,217,169,0.2)}
 .phase-note{font-size:12px;color:var(--text-3);margin:4px 0 12px;font-style:italic}
 
-/* === EXERCISE CARD === */
+/* EXERCISE CARD */
 .ex-card{
-  background:var(--surface);
-  border:1px solid var(--border);
+  background:var(--surface);border:1px solid var(--border);
   border-radius:16px;padding:14px;margin-bottom:8px;
   display:flex;gap:14px;align-items:center;
   cursor:pointer;transition:all 0.2s ease;
-  position:relative;overflow:hidden;
 }
 .ex-card:active{transform:scale(0.98);background:var(--surface-2)}
-.ex-card.done{opacity:0.35}
-.ex-card.done::after{
-  content:'';position:absolute;right:16px;top:50%;transform:translateY(-50%);
-  width:22px;height:22px;border-radius:50%;background:var(--stretch);
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230a0a0a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:center;
-}
 
 .ex-thumb{
   width:60px;height:60px;border-radius:12px;background:var(--surface-2);
@@ -149,14 +120,12 @@ body{
   font-size:8px;color:var(--text-3);text-align:center;padding:4px;line-height:1.2;
 }
 
-.ex-body{flex:1;min-width:0;padding-right:6px}
+.ex-body{flex:1;min-width:0}
 .ex-name{font-size:14px;font-weight:600;line-height:1.3;margin-bottom:3px;letter-spacing:-0.2px}
 .ex-sub{font-size:11px;color:var(--text-3);margin-bottom:8px}
-
 .pills{display:flex;gap:6px;flex-wrap:wrap}
 .pill{
-  padding:4px 10px;border-radius:8px;
-  background:var(--surface-2);
+  padding:4px 10px;border-radius:8px;background:var(--surface-2);
   font-size:11px;font-weight:600;color:var(--text-2);
 }
 .pill-accent{color:var(--accent);background:var(--accent-dim)}
@@ -169,7 +138,7 @@ body{
 .tag-back-to-back{background:var(--accent-dim);color:var(--accent)}
 .tag-optional{background:rgba(255,255,255,0.04);color:var(--text-3)}
 
-/* === BOTTOM SHEET === */
+/* BOTTOM SHEET */
 .sheet-overlay{
   display:none;position:fixed;inset:0;background:rgba(0,0,0,0);
   z-index:999;transition:background 0.3s;
@@ -181,7 +150,7 @@ body{
   background:var(--surface);border-radius:24px 24px 0 0;
   border-top:1px solid var(--border-light);
   z-index:1000;transition:transform 0.4s cubic-bezier(0.32,0.72,0,1);
-  padding-bottom:var(--safe-bottom);max-height:85vh;overflow-y:auto;
+  padding-bottom:calc(var(--safe-bottom) + 20px);max-height:85vh;overflow-y:auto;
 }
 .sheet.show{transform:translate(-50%,0)}
 .sheet-handle{width:40px;height:4px;background:rgba(255,255,255,0.12);border-radius:2px;margin:12px auto 0}
@@ -190,135 +159,33 @@ body{
   align-items:center;justify-content:center;overflow:hidden;
 }
 .sheet-gif img{width:100%;height:100%;object-fit:contain}
-.sheet-info{padding:24px 24px 28px}
+.sheet-info{padding:24px 24px 8px}
 .sheet-info h3{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.5px}
 .sheet-info .sheet-detail{font-size:13px;color:var(--text-2);margin-top:6px}
-.sheet-actions{display:flex;gap:10px;margin-top:20px}
-.sheet-btn{
-  flex:1;padding:16px;border-radius:14px;border:none;
-  font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;cursor:pointer;
-  transition:all 0.2s;letter-spacing:-0.2px;
+.sheet-close{
+  display:block;width:calc(100% - 48px);margin:20px 24px 0;
+  padding:16px;border-radius:14px;border:none;
+  background:var(--surface-2);color:var(--text);
+  font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;transition:all 0.2s;letter-spacing:-0.2px;
 }
-.sheet-btn:active{transform:scale(0.96)}
-.sheet-btn-done{background:var(--accent);color:#0a0a0a}
-.sheet-btn-done.is-done{background:var(--surface-2);color:var(--text-2)}
-.sheet-btn-close{background:var(--surface-2);color:var(--text)}
-
-/* === GUIDED MODE === */
-.guided-overlay{
-  display:none;position:fixed;inset:0;z-index:2000;
-  background:var(--bg);flex-direction:column;
-}
-.guided-overlay.show{display:flex}
-.guided-top{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:calc(var(--safe-top) + 14px) 20px 14px;
-}
-.guided-progress{height:3px;background:var(--border);margin:0 20px;border-radius:2px;overflow:hidden}
-.guided-progress-bar{height:100%;background:var(--accent);border-radius:2px;transition:width 0.4s ease}
-.guided-close{
-  padding:8px 16px;border-radius:100px;border:1px solid var(--border-light);
-  background:transparent;color:var(--text-2);
-  font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;cursor:pointer;
-}
-.guided-close:active{opacity:0.6}
-.guided-phase{
-  font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;
-  text-transform:uppercase;letter-spacing:1.5px;color:var(--text-3);
-}
-.guided-counter{font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--text-3);font-weight:500}
-.guided-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;overflow:hidden;position:relative}
-.guided-card{
-  width:100%;max-width:360px;text-align:center;
-  transition:transform 0.35s ease,opacity 0.35s ease;
-}
-.guided-card.exit-left{transform:translateX(-100%);opacity:0}
-.guided-card.exit-right{transform:translateX(100%);opacity:0}
-.guided-card.enter-left{transform:translateX(-60px);opacity:0}
-.guided-card.enter-right{transform:translateX(60px);opacity:0}
-.guided-gif{
-  width:220px;height:220px;border-radius:24px;background:var(--surface);
-  margin:0 auto 28px;overflow:hidden;border:1px solid var(--border);
-}
-.guided-gif img{width:100%;height:100%;object-fit:cover}
-.guided-gif .ph{
-  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-  font-size:12px;color:var(--text-3);padding:16px;
-}
-.guided-name{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;letter-spacing:-0.5px;margin-bottom:8px}
-.guided-sub{font-size:13px;color:var(--text-2);margin-bottom:20px}
-.guided-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-.guided-pills .pill{font-size:13px;padding:8px 18px;border-radius:12px}
-
-.guided-bottom{padding:16px 20px calc(var(--safe-bottom) + 20px);display:flex;gap:10px}
-.guided-nav{
-  flex:1;padding:18px;border-radius:16px;border:none;
-  font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;cursor:pointer;
-  transition:all 0.15s;letter-spacing:-0.2px;
-}
-.guided-nav:active{transform:scale(0.96)}
-.guided-nav.prev{background:var(--surface-2);color:var(--text);border:1px solid var(--border)}
-.guided-nav.next{background:var(--accent);color:#0a0a0a}
-.guided-nav:disabled{opacity:0.25;pointer-events:none}
-
-/* === REST TIMER === */
-.timer-overlay{
-  display:none;position:fixed;inset:0;z-index:3000;
-  background:rgba(10,10,10,0.97);
-  flex-direction:column;align-items:center;justify-content:center;
-}
-.timer-overlay.show{display:flex}
-.timer-label{
-  font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;
-  text-transform:uppercase;letter-spacing:2px;color:var(--text-3);margin-bottom:20px;
-}
-.timer-ring{
-  width:200px;height:200px;position:relative;margin-bottom:32px;
-  display:flex;align-items:center;justify-content:center;
-}
-.timer-ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
-.timer-ring circle{fill:none;stroke-width:3}
-.timer-ring .track{stroke:var(--border)}
-.timer-ring .fill{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset 1s linear}
-.timer-display{
-  font-family:'Space Grotesk',sans-serif;font-size:64px;font-weight:700;
-  letter-spacing:-3px;font-variant-numeric:tabular-nums;
-}
-.timer-presets{display:flex;gap:8px;margin-top:8px}
-.timer-preset{
-  padding:10px 20px;border-radius:100px;border:1px solid var(--border);
-  background:transparent;color:var(--text-2);font-family:'Space Grotesk',sans-serif;
-  font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;
-}
-.timer-preset:active,.timer-preset.active{background:var(--accent);border-color:var(--accent);color:#0a0a0a}
-.timer-skip{
-  margin-top:28px;padding:14px 36px;border-radius:100px;border:1px solid var(--border);
-  background:transparent;color:var(--text-3);
-  font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;
-}
-.timer-skip:active{opacity:0.6}
+.sheet-close:active{transform:scale(0.96);opacity:0.8}
 </style>
 </head>
 <body>
 
 <div class="header">
   <div class="top-row">
-    <div class="logo">
-      <div class="logo-icon">B</div>
-      <div class="logo-text">burn<span>from</span>home</div>
-    </div>
-    <button class="start-btn" id="startBtn" onclick="toggleGuided()">▶ START</button>
+    <div class="logo-icon">B</div>
+    <div class="logo-text">burn<span>from</span>home</div>
   </div>
   <div class="days" id="tabs"></div>
 </div>
-
-<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
 
 <div class="content-wrap">
   <div class="content" id="content"></div>
 </div>
 
-<!-- BOTTOM SHEET -->
 <div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()"></div>
 <div class="sheet" id="sheet">
   <div class="sheet-handle"></div>
@@ -326,51 +193,8 @@ body{
   <div class="sheet-info">
     <h3 id="sheetTitle"></h3>
     <div class="sheet-detail" id="sheetDetail"></div>
-    <div class="sheet-actions">
-      <button class="sheet-btn sheet-btn-done" id="sheetDoneBtn" onclick="toggleDoneFromSheet()">✓ Done</button>
-      <button class="sheet-btn sheet-btn-close" onclick="closeSheet()">Close</button>
-    </div>
   </div>
-</div>
-
-<!-- GUIDED WORKOUT -->
-<div class="guided-overlay" id="guided">
-  <div class="guided-top">
-    <div>
-      <div class="guided-phase" id="guidedPhase"></div>
-      <div class="guided-counter" id="guidedCounter"></div>
-    </div>
-    <button class="guided-close" onclick="exitGuided()">✕ Exit</button>
-  </div>
-  <div class="guided-progress"><div class="guided-progress-bar" id="guidedProgress"></div></div>
-  <div class="guided-body">
-    <div class="guided-card" id="guidedCard">
-      <div class="guided-gif" id="guidedGif"></div>
-      <div class="guided-name" id="guidedName"></div>
-      <div class="guided-sub" id="guidedSub"></div>
-      <div class="guided-pills" id="guidedPills"></div>
-    </div>
-  </div>
-  <div class="guided-bottom">
-    <button class="guided-nav prev" id="guidedPrev" onclick="guidedNav(-1)">← Back</button>
-    <button class="guided-nav next" id="guidedNext" onclick="guidedNav(1)">Next →</button>
-  </div>
-</div>
-
-<!-- REST TIMER -->
-<div class="timer-overlay" id="timer">
-  <div class="timer-label">Rest</div>
-  <div class="timer-ring">
-    <svg viewBox="0 0 200 200"><circle class="track" cx="100" cy="100" r="90"/><circle class="fill" id="timerFill" cx="100" cy="100" r="90"/></svg>
-    <div class="timer-display" id="timerDisplay">0:45</div>
-  </div>
-  <div class="timer-presets">
-    <button class="timer-preset" onclick="setTimer(30)">0:30</button>
-    <button class="timer-preset active" onclick="setTimer(45)">0:45</button>
-    <button class="timer-preset" onclick="setTimer(60)">1:00</button>
-    <button class="timer-preset" onclick="setTimer(90)">1:30</button>
-  </div>
-  <button class="timer-skip" onclick="closeTimer()">Skip</button>
+  <button class="sheet-close" onclick="closeSheet()">Close</button>
 </div>
 
 <script>
@@ -437,225 +261,195 @@ const G={
 'spinal-twist':'https://static.exercisedb.dev/media/2jl9K55.gif',
 };
 
-function e(n,s,r,g,sub,tag){return{n,s,r,g:G[g]||'',gk:g||'',sub:sub||'',tag:tag||null}}
+function e(n,s,r,g,sub,tag){return{n,s,r,g:G[g]||'',sub:sub||'',tag:tag||null}}
 
 const DAYS={
-  monday:{
-    title:'Monday',sub:'Team Challenge',duration:'30 min',
-    phases:[
-      {label:'Warm Up',type:'warmup',items:[
-        e('Fast Toe Taps','','20 reps','toe-taps','Bodyweight'),
-        e('Air Squats','','10 reps','air-squats','Bodyweight'),
-        e('Push-Ups','','10 reps','push-ups','Bodyweight'),
-        e('Kettlebell Deadlifts','','10 reps','kb-deadlifts','Kettlebell'),
-      ]},
-      {label:'Upper Bank',type:'workout',note:'Finish all before moving on.',items:[
-        e('Push-Ups','4 sets','12 reps','push-ups','Bodyweight'),
-        e('Rows','4 sets','12 reps','db-rows','Dumbbell'),
-        e('Dumbbell Press','4 sets','12 reps','db-bench-press','Dumbbell'),
-      ]},
-      {label:'Engine Bank',type:'workout',note:'Choose one.',items:[
-        e('Machine (Rower/Ski/Bike)','','60 calories','rowing-machine','Machine'),
-        e('Treadmill Run','','1km','treadmill','Machine'),
-      ]},
-      {label:'Lower Finish',type:'workout',items:[
-        e('Lunges','4 sets','12 reps','lunges','Bodyweight'),
-        e('Kettlebell Swings','4 sets','12 reps','kb-deadlifts','Kettlebell'),
-        e('Goblet Squats','4 sets','12 reps','goblet-squat','Dumbbell'),
-      ]},
-      {label:'Stretch',type:'stretch',items:[
-        e('Chest Doorway Stretch','','30s each side','chest-stretch'),
-        e('Quad Stretch','','30s each leg','quad-stretch'),
-        e('Hip Flexor Stretch','','30s each side','hip-flexor-stretch'),
-        e('Cat-Cow','','10 slow reps','cat-cow'),
-        e("Child's Pose",'','30s','childs-pose'),
-        e('Calf Stretch','','20s each side','s-calf-stretch'),
-      ]},
-    ]
-  },
-  tuesday:{
-    title:'Tuesday',sub:'Lower Body Strength',duration:'45 min',
-    phases:[
-      {label:'Warm Up',type:'warmup',items:[
-        e('Deep Split Squats','2 sets','10 each leg','atg-split-squats','Bodyweight'),
-        e('Single-Leg Glute Bridges','2 sets','10 each leg','glute-bridges','Bodyweight'),
-        e('Lying Supermen','2 sets','10 reps','supermen','Bodyweight'),
-      ]},
-      {label:'Workout',type:'workout',note:'Rest 60-90 sec between sets. Take turns with partner.',items:[
-        e('Back Squats','2-3 sets','8-12 reps','back-squats','Barbell'),
-        e('Kettlebell Deadlift','2-3 sets','6-10 reps','kb-deadlift','Kettlebell','back-to-back'),
-        e('Dumbbell Romanian Deadlift','2-3 sets','10-15 reps','db-rdl','Dumbbell','back-to-back'),
-        e('Sled Push','','15-20m','sled-push','Machine','optional'),
-        e('Bulgarian Split Squats','2-3 sets','8-12 per leg','bulgarian-split-squats','Bodyweight'),
-        e('Dumbbell Walking Lunges','2-3 sets','12-16 per leg','walking-lunges','Dumbbell'),
-        e('Squat Hold','','Hold while partner works','squat-hold','Bodyweight'),
-      ]},
-      {label:'Stretch',type:'stretch',items:[
-        e('Deep Squat Hold','','45s','deep-squat-hold'),
-        e('Pigeon Stretch','','30s each side','pigeon-stretch'),
-        e('Standing Quad Stretch','','30s each leg','quad-stretch'),
-        e('Hamstring Stretch','','30s each leg','hamstring-stretch'),
-        e('Hip Flexor Lunge Stretch','','30s each side','hip-flexor-stretch'),
-        e('Calf Stretch','','20s each side','s-calf-stretch'),
-      ]},
-    ]
-  },
-  wednesday:{
-    title:'Wednesday',sub:'Upper Body Strength',duration:'34 min',
-    phases:[
-      {label:'Warm Up',type:'warmup',items:[
-        e('Scap Push-Ups','','10 reps','scap-push-ups','Bodyweight'),
-        e('Band Pull-Aparts','','10 reps','band-pull-aparts','Band'),
-        e('Light Dumbbell Rows','','10 each arm','db-rows','Dumbbell'),
-        e('Slow Push-Ups','','10 reps','push-ups','Bodyweight'),
-      ]},
-      {label:'Workout',type:'workout',note:'Rest 45-60 sec between rounds.',items:[
-        e('Dumbbell Bench Press','3 rounds','10 reps','db-bench-press','Dumbbell'),
-        e('Dumbbell Row','3 rounds','12 each arm','db-rows','Dumbbell'),
-        e('Lateral Raises','3 rounds','10-12 reps','lateral-raises','Dumbbell'),
-        e('Rear Delt Fly','3 rounds','12-15 reps','rear-delt-fly','Dumbbell'),
-        e('Sit-Ups','3 rounds','20 reps','sit-ups','Bodyweight'),
-        e('Leg Raises','3 rounds','10-15 reps','leg-raises','Bodyweight'),
-        e('Side Plank','3 rounds','30 sec each side','side-plank','Bodyweight'),
-      ]},
-      {label:'Stretch',type:'stretch',items:[
-        e('Chest Doorway Stretch','','30s each side','chest-stretch'),
-        e('Cross-Body Shoulder Stretch','','20s each arm','shoulder-cross'),
-        e('Overhead Tricep Stretch','','20s each arm','tricep-stretch'),
-        e('Cobra Stretch','','30s','cobra-stretch'),
-        e('Cat-Cow','','10 slow reps','cat-cow'),
-        e("Child's Pose",'','30s','childs-pose'),
-      ]},
-    ]
-  },
-  thursday:{
-    title:'Thursday',sub:'Legs & Lungs',duration:'30 min',
-    phases:[
-      {label:'Warm Up',type:'warmup',items:[
-        e('Step-Ups','','10 each leg','step-ups','Bodyweight'),
-        e('Hip Hinges','','10 reps','hip-hinges','Bodyweight'),
-        e('Jumping Jacks','','10 reps','jumping-jacks','Bodyweight'),
-        e('High Knees','','20 reps','high-knees','Bodyweight'),
-      ]},
-      {label:'Strength',type:'workout',note:'Finish all before moving on.',items:[
-        e('Goblet Squats','3 sets','12 reps','goblet-squat','Dumbbell'),
-        e('Kettlebell Swings','3 sets','12 reps','kb-deadlifts','Kettlebell'),
-        e('Lunges','3 sets','12 reps','lunges','Bodyweight'),
-      ]},
-      {label:'Treadmill Run',type:'workout',items:[
-        e('Treadmill Run','','1km','treadmill','Machine'),
-      ]},
-      {label:'Finisher',type:'workout',note:'6-8 minutes.',items:[
-        e('Dumbbell Deadlifts','4 sets','12 reps','db-rdl','Dumbbell'),
-        e('Jump Squats','4 sets','12 reps','air-squats','Bodyweight'),
-        e('Sit-Ups','4 sets','12 reps','sit-ups','Bodyweight'),
-      ]},
-      {label:'Stretch',type:'stretch',items:[
-        e('Hamstring Stretch','','30s each leg','hamstring-stretch'),
-        e('Hip Flexor Lunge Stretch','','30s each side','hip-flexor-stretch'),
-        e('Pigeon Stretch','','30s each side','pigeon-stretch'),
-        e('Standing Quad Stretch','','30s each leg','quad-stretch'),
-        e('Butterfly Stretch','','30s','butterfly-stretch'),
-        e('Supine Spinal Twist','','20s each side','spinal-twist'),
-      ]},
-    ]
-  },
-  friday:{
-    title:'Friday',sub:'Cardio + Core Race',duration:'23 min',
-    phases:[
-      {label:'Warm Up',type:'warmup',items:[
-        e('Easy Jog / Machine','','200m','treadmill','Machine'),
-        e('Air Squats','','20 reps','air-squats','Bodyweight'),
-        e('Alternating Lunges','','20 reps','lunges','Bodyweight'),
-        e('Plank','','30 sec','plank','Bodyweight'),
-        e('Toe Taps','','20 reps','toe-taps','Bodyweight'),
-      ]},
-      {label:'Workout',type:'workout',note:'Rotate every 6 min. One person works at a time.',items:[
-        e('Machine (Rower/Ski/Bike)','6 min','Max calories','rowing-machine','Machine'),
-        e('Core Work','6 min','3x1 min on + 1 min rest, then 2x1 min','sit-ups','Bodyweight'),
-        e('Treadmill Sprint','6 min','Max distance','treadmill','Machine'),
-      ]},
-      {label:'Stretch',type:'stretch',items:[
-        e('Deep Squat Hold','','30s','deep-squat-hold'),
-        e('Hamstring Stretch','','30s each leg','hamstring-stretch'),
-        e('Hip Flexor Stretch','','30s each side','hip-flexor-stretch'),
-        e('Cobra Stretch','','30s','cobra-stretch'),
-        e('Spinal Twist','','20s each side','spinal-twist'),
-        e('Deep Breathing','','60s',''),
-      ]},
-    ]
-  },
-  saturday:{
-    title:'Saturday',sub:'Lead Self Training',duration:'20 min',
-    phases:[
-      {label:'Workout',type:'workout',note:'Rest 45-60 sec between rounds.',items:[
-        e('Goblet Squat','2-3 rounds','10-12 reps','goblet-squat','Dumbbell'),
-        e('Kettlebell or Dumbbell Romanian Deadlift','2-3 rounds','10-12 reps','db-rdl','Dumbbell'),
-        e('Dumbbell Shoulder Press','2 rounds','10-12 reps','db-shoulder-press','Dumbbell'),
-        e('Dumbbell Row','2 rounds','10-12 each side','db-rows','Dumbbell'),
-        e('Sit-Ups','2 rounds','15-20 reps','sit-ups','Bodyweight'),
-        e('Dead Bugs','2 rounds','10-15 each side','dead-bug','Bodyweight'),
-        e('Plank','2 rounds','30-40 sec','plank','Bodyweight'),
-      ]},
-      {label:'Stretch',type:'stretch',items:[
-        e('Deep Squat Hold','','30s','deep-squat-hold'),
-        e('Hamstring Stretch','','30s each leg','hamstring-stretch'),
-        e('Cross-Body Shoulder Stretch','','20s each arm','shoulder-cross'),
-        e('Cat-Cow','','10 reps','cat-cow'),
-        e("Child's Pose",'','30s','childs-pose'),
-      ]},
-    ]
-  },
-  sunday:{
-    title:'Sunday',sub:'Mobility + Recovery',duration:'30 min',
-    phases:[
-      {label:'Warm Up',type:'warmup',items:[
-        e('Ankle Rocks','','30 sec each leg',''),
-        e('Patrick Step-Backs','','10 each side',''),
-        e('Tib Raises','','12 reps','tib-raises','Bodyweight'),
-        e('Deep Squat Sit','','30 sec','deep-squat','Bodyweight'),
-        e('Slow Good Mornings','','10 reps','good-mornings','Bodyweight'),
-      ]},
-      {label:'Workout',type:'workout',note:'No rushing. Focus on control and range.',items:[
-        e('Deep Split Squats','3 rounds','8-10 each leg (4s down, 2s pause)','atg-split-squats','Bodyweight'),
-        e('Tib Raises','3 rounds','15-20 reps','tib-raises','Bodyweight'),
-        e('Calf Stretch','3 rounds','20-30 sec','calf-stretch','Bodyweight'),
-        e('Single-Leg Calf Raises','3 rounds','15 reps slow','calf-raises','Bodyweight'),
-        e('Poliquin Step-Downs','3 rounds','10-12 each side','poliquin-step-downs','Bodyweight'),
-        e('Slantboard Squats','3 rounds','6-8 reps (5s eccentric)','slantboard-squats','Bodyweight'),
-        e('Jefferson Curls','3 rounds','8-10 very light','jefferson-curl','Light weight'),
-        e('Tempo Good Mornings','3 rounds','8-10 reps (3s down / 1s up)','good-mornings','Bodyweight'),
-        e('Single-Leg Balance','2 rounds','30 sec','single-leg-balance','Bodyweight'),
-        e('Deep Split Squat Hold','2 rounds','20 sec each side','atg-split-squats','Bodyweight'),
-        e('Deep Squat Breathing','2 rounds','30 sec','deep-squat','Bodyweight'),
-      ]},
-      {label:'Cooldown',type:'stretch',items:[
-        e('Deep Squat Hold','','30s','deep-squat-hold'),
-        e('Pigeon Stretch','','30s each side','pigeon-stretch'),
-        e('Hamstring Stretch','','30s','hamstring-stretch'),
-        e('Hip Flexor Stretch','','30s each side','hip-flexor-stretch'),
-        e('Nasal Breathing','','Throughout',''),
-      ]},
-    ]
-  }
+  monday:{title:'Monday',sub:'Team Challenge',duration:'30 min',phases:[
+    {label:'Warm Up',type:'warmup',items:[
+      e('Fast Toe Taps','','20 reps','toe-taps','Bodyweight'),
+      e('Air Squats','','10 reps','air-squats','Bodyweight'),
+      e('Push-Ups','','10 reps','push-ups','Bodyweight'),
+      e('Kettlebell Deadlifts','','10 reps','kb-deadlifts','Kettlebell'),
+    ]},
+    {label:'Upper Bank',type:'workout',note:'Finish all before moving on.',items:[
+      e('Push-Ups','4 sets','12 reps','push-ups','Bodyweight'),
+      e('Rows','4 sets','12 reps','db-rows','Dumbbell'),
+      e('Dumbbell Press','4 sets','12 reps','db-bench-press','Dumbbell'),
+    ]},
+    {label:'Engine Bank',type:'workout',note:'Choose one.',items:[
+      e('Machine (Rower/Ski/Bike)','','60 calories','rowing-machine','Machine'),
+      e('Treadmill Run','','1km','treadmill','Machine'),
+    ]},
+    {label:'Lower Finish',type:'workout',items:[
+      e('Lunges','4 sets','12 reps','lunges','Bodyweight'),
+      e('Kettlebell Swings','4 sets','12 reps','kb-deadlifts','Kettlebell'),
+      e('Goblet Squats','4 sets','12 reps','goblet-squat','Dumbbell'),
+    ]},
+    {label:'Stretch',type:'stretch',items:[
+      e('Chest Doorway Stretch','','30s each side','chest-stretch'),
+      e('Quad Stretch','','30s each leg','quad-stretch'),
+      e('Hip Flexor Stretch','','30s each side','hip-flexor-stretch'),
+      e('Cat-Cow','','10 slow reps','cat-cow'),
+      e("Child's Pose",'','30s','childs-pose'),
+      e('Calf Stretch','','20s each side','s-calf-stretch'),
+    ]},
+  ]},
+  tuesday:{title:'Tuesday',sub:'Lower Body Strength',duration:'45 min',phases:[
+    {label:'Warm Up',type:'warmup',items:[
+      e('Deep Split Squats','2 sets','10 each leg','atg-split-squats','Bodyweight'),
+      e('Single-Leg Glute Bridges','2 sets','10 each leg','glute-bridges','Bodyweight'),
+      e('Lying Supermen','2 sets','10 reps','supermen','Bodyweight'),
+    ]},
+    {label:'Workout',type:'workout',note:'Rest 60-90 sec between sets. Take turns with partner.',items:[
+      e('Back Squats','2-3 sets','8-12 reps','back-squats','Barbell'),
+      e('Kettlebell Deadlift','2-3 sets','6-10 reps','kb-deadlift','Kettlebell','back-to-back'),
+      e('Dumbbell Romanian Deadlift','2-3 sets','10-15 reps','db-rdl','Dumbbell','back-to-back'),
+      e('Sled Push','','15-20m','sled-push','Machine','optional'),
+      e('Bulgarian Split Squats','2-3 sets','8-12 per leg','bulgarian-split-squats','Bodyweight'),
+      e('Dumbbell Walking Lunges','2-3 sets','12-16 per leg','walking-lunges','Dumbbell'),
+      e('Squat Hold','','Hold while partner works','squat-hold','Bodyweight'),
+    ]},
+    {label:'Stretch',type:'stretch',items:[
+      e('Deep Squat Hold','','45s','deep-squat-hold'),
+      e('Pigeon Stretch','','30s each side','pigeon-stretch'),
+      e('Standing Quad Stretch','','30s each leg','quad-stretch'),
+      e('Hamstring Stretch','','30s each leg','hamstring-stretch'),
+      e('Hip Flexor Lunge Stretch','','30s each side','hip-flexor-stretch'),
+      e('Calf Stretch','','20s each side','s-calf-stretch'),
+    ]},
+  ]},
+  wednesday:{title:'Wednesday',sub:'Upper Body Strength',duration:'34 min',phases:[
+    {label:'Warm Up',type:'warmup',items:[
+      e('Scap Push-Ups','','10 reps','scap-push-ups','Bodyweight'),
+      e('Band Pull-Aparts','','10 reps','band-pull-aparts','Band'),
+      e('Light Dumbbell Rows','','10 each arm','db-rows','Dumbbell'),
+      e('Slow Push-Ups','','10 reps','push-ups','Bodyweight'),
+    ]},
+    {label:'Workout',type:'workout',note:'Rest 45-60 sec between rounds.',items:[
+      e('Dumbbell Bench Press','3 rounds','10 reps','db-bench-press','Dumbbell'),
+      e('Dumbbell Row','3 rounds','12 each arm','db-rows','Dumbbell'),
+      e('Lateral Raises','3 rounds','10-12 reps','lateral-raises','Dumbbell'),
+      e('Rear Delt Fly','3 rounds','12-15 reps','rear-delt-fly','Dumbbell'),
+      e('Sit-Ups','3 rounds','20 reps','sit-ups','Bodyweight'),
+      e('Leg Raises','3 rounds','10-15 reps','leg-raises','Bodyweight'),
+      e('Side Plank','3 rounds','30 sec each side','side-plank','Bodyweight'),
+    ]},
+    {label:'Stretch',type:'stretch',items:[
+      e('Chest Doorway Stretch','','30s each side','chest-stretch'),
+      e('Cross-Body Shoulder Stretch','','20s each arm','shoulder-cross'),
+      e('Overhead Tricep Stretch','','20s each arm','tricep-stretch'),
+      e('Cobra Stretch','','30s','cobra-stretch'),
+      e('Cat-Cow','','10 slow reps','cat-cow'),
+      e("Child's Pose",'','30s','childs-pose'),
+    ]},
+  ]},
+  thursday:{title:'Thursday',sub:'Legs & Lungs',duration:'30 min',phases:[
+    {label:'Warm Up',type:'warmup',items:[
+      e('Step-Ups','','10 each leg','step-ups','Bodyweight'),
+      e('Hip Hinges','','10 reps','hip-hinges','Bodyweight'),
+      e('Jumping Jacks','','10 reps','jumping-jacks','Bodyweight'),
+      e('High Knees','','20 reps','high-knees','Bodyweight'),
+    ]},
+    {label:'Strength',type:'workout',note:'Finish all before moving on.',items:[
+      e('Goblet Squats','3 sets','12 reps','goblet-squat','Dumbbell'),
+      e('Kettlebell Swings','3 sets','12 reps','kb-deadlifts','Kettlebell'),
+      e('Lunges','3 sets','12 reps','lunges','Bodyweight'),
+    ]},
+    {label:'Treadmill Run',type:'workout',items:[
+      e('Treadmill Run','','1km','treadmill','Machine'),
+    ]},
+    {label:'Finisher',type:'workout',note:'6-8 minutes.',items:[
+      e('Dumbbell Deadlifts','4 sets','12 reps','db-rdl','Dumbbell'),
+      e('Jump Squats','4 sets','12 reps','air-squats','Bodyweight'),
+      e('Sit-Ups','4 sets','12 reps','sit-ups','Bodyweight'),
+    ]},
+    {label:'Stretch',type:'stretch',items:[
+      e('Hamstring Stretch','','30s each leg','hamstring-stretch'),
+      e('Hip Flexor Lunge Stretch','','30s each side','hip-flexor-stretch'),
+      e('Pigeon Stretch','','30s each side','pigeon-stretch'),
+      e('Standing Quad Stretch','','30s each leg','quad-stretch'),
+      e('Butterfly Stretch','','30s','butterfly-stretch'),
+      e('Supine Spinal Twist','','20s each side','spinal-twist'),
+    ]},
+  ]},
+  friday:{title:'Friday',sub:'Cardio + Core Race',duration:'23 min',phases:[
+    {label:'Warm Up',type:'warmup',items:[
+      e('Easy Jog / Machine','','200m','treadmill','Machine'),
+      e('Air Squats','','20 reps','air-squats','Bodyweight'),
+      e('Alternating Lunges','','20 reps','lunges','Bodyweight'),
+      e('Plank','','30 sec','plank','Bodyweight'),
+      e('Toe Taps','','20 reps','toe-taps','Bodyweight'),
+    ]},
+    {label:'Workout',type:'workout',note:'Rotate every 6 min. One person works at a time.',items:[
+      e('Machine (Rower/Ski/Bike)','6 min','Max calories','rowing-machine','Machine'),
+      e('Core Work','6 min','3x1 min on + 1 min rest, then 2x1 min','sit-ups','Bodyweight'),
+      e('Treadmill Sprint','6 min','Max distance','treadmill','Machine'),
+    ]},
+    {label:'Stretch',type:'stretch',items:[
+      e('Deep Squat Hold','','30s','deep-squat-hold'),
+      e('Hamstring Stretch','','30s each leg','hamstring-stretch'),
+      e('Hip Flexor Stretch','','30s each side','hip-flexor-stretch'),
+      e('Cobra Stretch','','30s','cobra-stretch'),
+      e('Spinal Twist','','20s each side','spinal-twist'),
+      e('Deep Breathing','','60s',''),
+    ]},
+  ]},
+  saturday:{title:'Saturday',sub:'Lead Self Training',duration:'20 min',phases:[
+    {label:'Workout',type:'workout',note:'Rest 45-60 sec between rounds.',items:[
+      e('Goblet Squat','2-3 rounds','10-12 reps','goblet-squat','Dumbbell'),
+      e('Kettlebell or Dumbbell Romanian Deadlift','2-3 rounds','10-12 reps','db-rdl','Dumbbell'),
+      e('Dumbbell Shoulder Press','2 rounds','10-12 reps','db-shoulder-press','Dumbbell'),
+      e('Dumbbell Row','2 rounds','10-12 each side','db-rows','Dumbbell'),
+      e('Sit-Ups','2 rounds','15-20 reps','sit-ups','Bodyweight'),
+      e('Dead Bugs','2 rounds','10-15 each side','dead-bug','Bodyweight'),
+      e('Plank','2 rounds','30-40 sec','plank','Bodyweight'),
+    ]},
+    {label:'Stretch',type:'stretch',items:[
+      e('Deep Squat Hold','','30s','deep-squat-hold'),
+      e('Hamstring Stretch','','30s each leg','hamstring-stretch'),
+      e('Cross-Body Shoulder Stretch','','20s each arm','shoulder-cross'),
+      e('Cat-Cow','','10 reps','cat-cow'),
+      e("Child's Pose",'','30s','childs-pose'),
+    ]},
+  ]},
+  sunday:{title:'Sunday',sub:'Mobility + Recovery',duration:'30 min',phases:[
+    {label:'Warm Up',type:'warmup',items:[
+      e('Ankle Rocks','','30 sec each leg',''),
+      e('Patrick Step-Backs','','10 each side',''),
+      e('Tib Raises','','12 reps','tib-raises','Bodyweight'),
+      e('Deep Squat Sit','','30 sec','deep-squat','Bodyweight'),
+      e('Slow Good Mornings','','10 reps','good-mornings','Bodyweight'),
+    ]},
+    {label:'Workout',type:'workout',note:'No rushing. Focus on control and range.',items:[
+      e('Deep Split Squats','3 rounds','8-10 each leg (4s down, 2s pause)','atg-split-squats','Bodyweight'),
+      e('Tib Raises','3 rounds','15-20 reps','tib-raises','Bodyweight'),
+      e('Calf Stretch','3 rounds','20-30 sec','calf-stretch','Bodyweight'),
+      e('Single-Leg Calf Raises','3 rounds','15 reps slow','calf-raises','Bodyweight'),
+      e('Poliquin Step-Downs','3 rounds','10-12 each side','poliquin-step-downs','Bodyweight'),
+      e('Slantboard Squats','3 rounds','6-8 reps (5s eccentric)','slantboard-squats','Bodyweight'),
+      e('Jefferson Curls','3 rounds','8-10 very light','jefferson-curl','Light weight'),
+      e('Tempo Good Mornings','3 rounds','8-10 reps (3s down / 1s up)','good-mornings','Bodyweight'),
+      e('Single-Leg Balance','2 rounds','30 sec','single-leg-balance','Bodyweight'),
+      e('Deep Split Squat Hold','2 rounds','20 sec each side','atg-split-squats','Bodyweight'),
+      e('Deep Squat Breathing','2 rounds','30 sec','deep-squat','Bodyweight'),
+    ]},
+    {label:'Cooldown',type:'stretch',items:[
+      e('Deep Squat Hold','','30s','deep-squat-hold'),
+      e('Pigeon Stretch','','30s each side','pigeon-stretch'),
+      e('Hamstring Stretch','','30s','hamstring-stretch'),
+      e('Hip Flexor Stretch','','30s each side','hip-flexor-stretch'),
+      e('Nasal Breathing','','Throughout',''),
+    ]},
+  ]}
 };
 
 const dayOrder=['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
 const dayLabels=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 let active=dayOrder[new Date().getDay()===0?6:new Date().getDay()-1];
 
-// COMPLETION
-const today=new Date().toISOString().slice(0,10);
-let doneKey='bfh-done-'+today;
-let doneSet=new Set(JSON.parse(localStorage.getItem(doneKey)||'[]'));
-Object.keys(localStorage).forEach(k=>{if(k.startsWith('bfh-done-')&&k!==doneKey)localStorage.removeItem(k)});
-function saveDone(){localStorage.setItem(doneKey,JSON.stringify([...doneSet]))}
-function exId(day,pi,ei){return day+'-'+pi+'-'+ei}
-
 // SWIPE
 let touchStartX=0,touchStartY=0,swiping=false;
 document.addEventListener('touchstart',ev=>{
-  if(document.getElementById('guided').classList.contains('show'))return;
   if(document.getElementById('sheet').classList.contains('show'))return;
   touchStartX=ev.touches[0].clientX;touchStartY=ev.touches[0].clientY;swiping=true;
 },{passive:true});
@@ -689,54 +483,35 @@ function sel(d){
   switchDay(d,idx>cur?'left':'right');
 }
 
-// SCROLL PROGRESS
-window.addEventListener('scroll',()=>{
-  const h=document.documentElement.scrollHeight-window.innerHeight;
-  const pct=h>0?Math.min(100,window.scrollY/h*100):0;
-  document.getElementById('progressBar').style.width=pct+'%';
-},{passive:true});
-
 function countExercises(day){let c=0;day.phases.forEach(p=>{if(p.items)c+=p.items.length});return c}
-function countDone(dayKey){
-  const day=DAYS[dayKey];let c=0,t=0;
-  day.phases.forEach((p,pi)=>{if(p.items)p.items.forEach((_,ei)=>{t++;if(doneSet.has(exId(dayKey,pi,ei)))c++})});
-  return{c,t};
-}
 
 function renderTabs(){
-  document.getElementById('tabs').innerHTML=dayOrder.map((d,i)=>{
-    const{c,t}=countDone(d);
-    const completed=c===t&&t>0;
-    return `<button class="day-btn ${d===active?'active':''} ${completed?'completed':''}" onclick="sel('${d}')">
+  document.getElementById('tabs').innerHTML=dayOrder.map((d,i)=>
+    `<button class="day-btn ${d===active?'active':''}" onclick="sel('${d}')">
       ${dayLabels[i]}<div class="day-dot"></div>
-    </button>`;
-  }).join('');
+    </button>`
+  ).join('');
 }
 
 function render(){
   const day=DAYS[active];
-  const{c,t}=countDone(active);
   let h=`<div class="day-header">
     <div class="day-label">${day.title}</div>
     <div class="day-title">${day.sub}</div>
     <div class="day-meta">
-      <span>${t} exercises</span><div class="dot"></div>
-      <span>${day.duration}</span>
-      ${c>0?'<div class="dot"></div><span>'+c+'/'+t+' done</span>':''}
+      <span>${countExercises(day)} exercises</span><div class="dot"></div><span>${day.duration}</span>
     </div>
   </div>`;
 
-  day.phases.forEach((p,pi)=>{
+  day.phases.forEach(p=>{
     h+=`<div class="phase-section">
       <div class="phase-header">
         <span class="phase-tag ${p.type}">${p.label}</span>
         <div class="phase-line"></div>
       </div>`;
     if(p.note)h+=`<div class="phase-note">${p.note}</div>`;
-    if(p.items)p.items.forEach((ex,ei)=>{
-      const id=exId(active,pi,ei);
-      const done=doneSet.has(id);
-      h+=`<div class="ex-card${done?' done':''}" onclick="openSheet('${active}',${pi},${ei})" data-id="${id}">`;
+    if(p.items)p.items.forEach(ex=>{
+      h+=`<div class="ex-card" ${ex.g?`onclick="openSheet('${ex.g.replace(/'/g,"\\'")}','${ex.n.replace(/'/g,"\\'")}','${[ex.sub,ex.s,ex.r].filter(Boolean).join(' · ')}')"`:''}>`;
       h+=`<div class="ex-thumb">`;
       if(ex.g)h+=`<div class="skeleton"></div><img src="${ex.g}" alt="${ex.n}" loading="lazy" class="loading" onload="this.classList.remove('loading');this.previousElementSibling.style.display='none'" onerror="this.outerHTML='<div class=ph>${ex.n}</div>';this.previousElementSibling.style.display='none'">`;
       else h+=`<div class="ph">${ex.n}</div>`;
@@ -753,23 +528,14 @@ function render(){
     h+=`</div>`;
   });
   document.getElementById('content').innerHTML=h;
-  updateStartBtn();
 }
 
 // BOTTOM SHEET
-let sheetCtx=null;
-function openSheet(day,pi,ei){
-  const ex=DAYS[day].phases[pi].items[ei];
-  sheetCtx={day,pi,ei,ex};
-  const id=exId(day,pi,ei);
-  document.getElementById('sheetImg').src=ex.g||'';
-  document.getElementById('sheetImg').style.display=ex.g?'block':'none';
-  document.getElementById('sheetTitle').textContent=ex.n;
-  document.getElementById('sheetDetail').textContent=[ex.sub,ex.s,ex.r].filter(Boolean).join(' · ');
-  const btn=document.getElementById('sheetDoneBtn');
-  const done=doneSet.has(id);
-  btn.textContent=done?'Undo':'✓ Done';
-  btn.className='sheet-btn sheet-btn-done'+(done?' is-done':'');
+function openSheet(gif,name,detail){
+  document.getElementById('sheetImg').src=gif;
+  document.getElementById('sheetImg').style.display=gif?'block':'none';
+  document.getElementById('sheetTitle').textContent=name;
+  document.getElementById('sheetDetail').textContent=detail;
   document.getElementById('sheetOverlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   document.body.style.overflow='hidden';
@@ -778,14 +544,7 @@ function openSheet(day,pi,ei){
 function closeSheet(){
   document.getElementById('sheetOverlay').classList.remove('show');
   document.getElementById('sheet').classList.remove('show');
-  document.body.style.overflow='';sheetCtx=null;
-}
-function toggleDoneFromSheet(){
-  if(!sheetCtx)return;
-  const id=exId(sheetCtx.day,sheetCtx.pi,sheetCtx.ei);
-  if(doneSet.has(id))doneSet.delete(id);else doneSet.add(id);
-  saveDone();closeSheet();renderTabs();render();
-  try{navigator.vibrate&&navigator.vibrate([10,30,10])}catch(e){}
+  document.body.style.overflow='';
 }
 let sheetTouchY=0;
 document.getElementById('sheet').addEventListener('touchstart',ev=>{sheetTouchY=ev.touches[0].clientY},{passive:true});
@@ -793,136 +552,7 @@ document.getElementById('sheet').addEventListener('touchend',ev=>{
   if(ev.changedTouches[0].clientY-sheetTouchY>80)closeSheet();
 },{passive:true});
 
-// GUIDED MODE
-let guidedItems=[],guidedIdx=0,guidedActive=false;
-function flattenDay(dayKey){
-  const items=[];
-  DAYS[dayKey].phases.forEach((p,pi)=>{
-    if(p.items)p.items.forEach((ex,ei)=>{
-      items.push({...ex,phase:p.label,phaseType:p.type,pi,ei,id:exId(dayKey,pi,ei)});
-    });
-  });
-  return items;
-}
-function toggleGuided(){
-  if(guidedActive){exitGuided();return}
-  guidedItems=flattenDay(active);guidedIdx=0;
-  for(let i=0;i<guidedItems.length;i++){if(!doneSet.has(guidedItems[i].id)){guidedIdx=i;break}}
-  guidedActive=true;
-  document.getElementById('guided').classList.add('show');
-  document.getElementById('startBtn').classList.add('active-workout');
-  document.getElementById('startBtn').textContent='■ STOP';
-  renderGuided();
-  try{navigator.vibrate&&navigator.vibrate(15)}catch(e){}
-}
-function exitGuided(){
-  guidedActive=false;
-  document.getElementById('guided').classList.remove('show');
-  document.getElementById('startBtn').classList.remove('active-workout');
-  document.getElementById('startBtn').textContent='▶ START';
-  renderTabs();render();
-}
-function renderGuided(){
-  const item=guidedItems[guidedIdx];if(!item)return;
-  document.getElementById('guidedPhase').textContent=item.phase;
-  document.getElementById('guidedCounter').textContent=(guidedIdx+1)+' of '+guidedItems.length;
-  document.getElementById('guidedProgress').style.width=((guidedIdx+1)/guidedItems.length*100)+'%';
-  const gifEl=document.getElementById('guidedGif');
-  if(item.g)gifEl.innerHTML=`<img src="${item.g}" alt="${item.n}">`;
-  else gifEl.innerHTML=`<div class="ph">${item.n}</div>`;
-  document.getElementById('guidedName').textContent=item.n;
-  document.getElementById('guidedSub').textContent=item.sub||'';
-  let pills='';
-  if(item.s)pills+=`<div class="pill">${item.s}</div>`;
-  if(item.r)pills+=`<div class="pill pill-accent">${item.r}</div>`;
-  document.getElementById('guidedPills').innerHTML=pills;
-  document.getElementById('guidedPrev').disabled=guidedIdx===0;
-  const isLast=guidedIdx===guidedItems.length-1;
-  const nextBtn=document.getElementById('guidedNext');
-  nextBtn.textContent=isLast?'Finish ✓':'Next →';
-  nextBtn.style.background=isLast?'var(--stretch)':'var(--accent)';
-}
-function guidedNav(dir){
-  const card=document.getElementById('guidedCard');
-  if(dir===1){doneSet.add(guidedItems[guidedIdx].id);saveDone()}
-  if(dir===1&&guidedIdx===guidedItems.length-1){
-    exitGuided();try{navigator.vibrate&&navigator.vibrate([20,40,20,40,20])}catch(e){}return;
-  }
-  card.classList.add(dir===1?'exit-left':'exit-right');
-  setTimeout(()=>{
-    guidedIdx+=dir;renderGuided();
-    card.classList.remove('exit-left','exit-right');
-    card.classList.add(dir===1?'enter-right':'enter-left');
-    void card.offsetWidth;card.classList.remove('enter-right','enter-left');
-  },180);
-  const cur=guidedItems[guidedIdx],nxt=guidedItems[guidedIdx+dir];
-  if(dir===1&&cur&&cur.phaseType==='workout'&&nxt&&nxt.phaseType==='workout'&&cur.s){
-    setTimeout(()=>showTimer(),250);
-  }
-  try{navigator.vibrate&&navigator.vibrate(10)}catch(e){}
-}
-let guidedTouchX=0;
-document.getElementById('guided').addEventListener('touchstart',ev=>{guidedTouchX=ev.touches[0].clientX},{passive:true});
-document.getElementById('guided').addEventListener('touchend',ev=>{
-  const dx=ev.changedTouches[0].clientX-guidedTouchX;
-  if(Math.abs(dx)>60){
-    if(dx<0&&guidedIdx<guidedItems.length-1)guidedNav(1);
-    else if(dx>0&&guidedIdx>0)guidedNav(-1);
-  }
-},{passive:true});
-
-// TIMER
-let timerInterval=null,timerSecs=45,timerTotal=45;
-const circ=2*Math.PI*90;
-function showTimer(){
-  timerSecs=45;timerTotal=45;updateTimerDisplay();
-  document.getElementById('timerFill').style.strokeDasharray=circ;
-  document.getElementById('timerFill').style.strokeDashoffset='0';
-  document.getElementById('timer').classList.add('show');
-  document.querySelectorAll('.timer-preset').forEach(b=>{b.classList.toggle('active',b.textContent.trim()==='0:45')});
-  startTimerCountdown();
-}
-function setTimer(s){
-  clearInterval(timerInterval);timerSecs=s;timerTotal=s;updateTimerDisplay();
-  document.getElementById('timerFill').style.strokeDashoffset='0';
-  document.querySelectorAll('.timer-preset').forEach(b=>{
-    const label=Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;
-    b.classList.toggle('active',b.textContent.trim()===label);
-  });
-  startTimerCountdown();
-}
-function startTimerCountdown(){
-  clearInterval(timerInterval);
-  timerInterval=setInterval(()=>{
-    timerSecs--;
-    if(timerSecs<=0){clearInterval(timerInterval);timerSecs=0;
-      try{navigator.vibrate&&navigator.vibrate([100,50,100,50,200])}catch(e){}
-      setTimeout(closeTimer,800);
-    }
-    updateTimerDisplay();
-    document.getElementById('timerFill').style.strokeDashoffset=circ*((timerTotal-timerSecs)/timerTotal);
-  },1000);
-}
-function updateTimerDisplay(){
-  const m=Math.floor(timerSecs/60),s=timerSecs%60;
-  document.getElementById('timerDisplay').textContent=m+':'+(s<10?'0':'')+s;
-}
-function closeTimer(){clearInterval(timerInterval);document.getElementById('timer').classList.remove('show')}
-
-function updateStartBtn(){
-  if(!guidedActive){
-    document.getElementById('startBtn').classList.remove('active-workout');
-    document.getElementById('startBtn').textContent='▶ START';
-  }
-}
-
-document.addEventListener('keydown',ev=>{
-  if(ev.key==='Escape'){
-    if(document.getElementById('timer').classList.contains('show'))closeTimer();
-    else if(guidedActive)exitGuided();
-    else if(document.getElementById('sheet').classList.contains('show'))closeSheet();
-  }
-});
+document.addEventListener('keydown',ev=>{if(ev.key==='Escape')closeSheet()});
 
 renderTabs();render();
 </script>
