@@ -84,7 +84,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;
   text-transform:uppercase;letter-spacing:0.3px;
 }
-.tag-superset{background:rgba(200,255,0,0.12);color:var(--accent)}
+.tag-back-to-back{background:rgba(200,255,0,0.12);color:var(--accent)}
 .tag-optional{background:rgba(255,255,255,0.05);color:var(--dim)}
 .tag-rest{background:rgba(255,255,255,0.05);color:var(--dim)}
 
@@ -162,19 +162,19 @@ const G={
 'scap-push-ups':'https://static.exercisedb.dev/media/GdMa1ET.gif',
 'jumping-jacks':'https://static.exercisedb.dev/media/1g5bPpA.gif',
 'db-shoulder-press':'https://static.exercisedb.dev/media/1TkiAFK.gif',
-'kb-deadlifts':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Kettlebell-Deadlift.gif',
-'kb-deadlift':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Kettlebell-Deadlift.gif',
-'glute-bridges':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Glute-Bridge.gif',
-'db-rdl':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Romanian-Deadlift.gif',
-'bulgarian-split-squats':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Bulgarian-Split-Squat.gif',
-'band-pull-aparts':'https://fitnessprogramer.com/wp-content/uploads/2021/06/Band-Pull-Apart.gif',
-'hip-hinges':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Good-Morning.gif',
-'hip-thrusts':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Hip-Thrust.gif',
-'good-mornings':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Good-Morning.gif',
-'jefferson-curl':'https://fitnessprogramer.com/wp-content/uploads/2022/02/Jefferson-Curl.gif',
-'poliquin-step-downs':'https://fitnessprogramer.com/wp-content/uploads/2022/04/Poliquin-Step-Up.gif',
-'slantboard-squats':'https://fitnessprogramer.com/wp-content/uploads/2022/04/ATG-Split-Squat.gif',
-'calf-stretch':'https://fitnessprogramer.com/wp-content/uploads/2021/02/Calf-Stretch.gif',
+'kb-deadlifts':'https://static.exercisedb.dev/media/8ARQ9Hw.gif',
+'kb-deadlift':'https://static.exercisedb.dev/media/8ARQ9Hw.gif',
+'glute-bridges':'https://static.exercisedb.dev/media/qKBpF7I.gif',
+'db-rdl':'https://static.exercisedb.dev/media/KUaoUV8.gif',
+'bulgarian-split-squats':'https://static.exercisedb.dev/media/QpXqiq8.gif',
+'band-pull-aparts':'https://static.exercisedb.dev/media/wXvUZC8.gif',
+'hip-hinges':'https://static.exercisedb.dev/media/XlZ4lAC.gif',
+'hip-thrusts':'https://static.exercisedb.dev/media/yWxMvB5.gif',
+'good-mornings':'https://static.exercisedb.dev/media/XlZ4lAC.gif',
+'jefferson-curl':'https://static.exercisedb.dev/media/pkSoCW9.gif',
+'poliquin-step-downs':'https://static.exercisedb.dev/media/gFyFj9z.gif',
+'slantboard-squats':'https://static.exercisedb.dev/media/0lQnxMZ.gif',
+'calf-stretch':'https://static.exercisedb.dev/media/17bqEXD.gif',
 // Stretch GIFs
 'chest-stretch':'https://static.exercisedb.dev/media/3uj0Ozg.gif',
 'quad-stretch':'https://static.exercisedb.dev/media/tFGKm99.gif',
@@ -195,23 +195,23 @@ const G={
 // Flat exercise list per day. No blocks, no hierarchy. Just: phase → exercises in order.
 const DAYS = {
   monday: {
-    title:'Met Con / Team Challenge', duration:'30 min',
+    title:'Cardio + Bodyweight', duration:'30 min',
     phases: [
       { label:'Warm Up', type:'warmup', items:[
         {n:'Fast Toe Taps',r:'20 reps',g:'toe-taps'},
         {n:'Air Squats',r:'10 reps',g:'air-squats'},
         {n:'Push-Ups',r:'10 reps',g:'push-ups'},
-        {n:'KB Deadlifts',r:'10 reps',g:'kb-deadlifts'},
+        {n:'Kettlebell Deadlifts',r:'10 reps',g:'kb-deadlifts'},
       ]},
       { label:'Workout', type:'workout', items:[
         {n:'Row / Ski / Bike',r:'45s hard / 75s easy x 5 rounds',g:'rowing-machine'},
-        {n:'Push-Ups',r:'10 reps (AMRAP cycle)',g:'push-ups'},
-        {n:'Air Squats',r:'15 reps (AMRAP cycle)',g:'air-squats'},
-        {n:'Sit-Ups',r:'20 reps (AMRAP cycle)',g:'sit-ups'},
+        {n:'Push-Ups',r:'10 reps (repeat non-stop)',g:'push-ups'},
+        {n:'Air Squats',r:'15 reps (repeat non-stop)',g:'air-squats'},
+        {n:'Sit-Ups',r:'20 reps (repeat non-stop)',g:'sit-ups'},
         {n:'Plank',r:'30 sec x 3 rounds',g:'plank'},
         {n:'Dead Bug',r:'10 per side x 3 rounds',g:'dead-bug'},
         {n:'Easy Walk',r:'60 sec between rounds',g:''},
-      ], note:'AMRAP for 10 min, then 3 rounds of core.'},
+      ], note:'Do as many rounds as possible for 10 min, then 3 rounds of core.'},
       { label:'Stretch', type:'stretch', items:[
         {n:'Chest Doorway Stretch',r:'30s each side',g:'chest-stretch'},
         {n:'Quad Stretch',r:'30s each leg',g:'quad-stretch'},
@@ -226,19 +226,19 @@ const DAYS = {
     title:'Lower Body Strength', duration:'45 min',
     phases: [
       { label:'Warm Up', type:'warmup', items:[
-        {n:'ATG Split Squats',r:'2 x 10 each leg',g:'atg-split-squats'},
+        {n:'Deep Split Squats',r:'2 x 10 each leg',g:'atg-split-squats'},
         {n:'Single-Leg Glute Bridges',r:'2 x 10 each leg',g:'glute-bridges'},
         {n:'Lying Supermen',r:'2 x 10',g:'supermen'},
       ]},
       { label:'Workout', type:'workout', items:[
         {n:'Back Squats',r:'8-12 reps x 2-3 sets',g:'back-squats'},
-        {n:'KB Deadlift',r:'6-10 reps x 2-3 sets',g:'kb-deadlift',tag:'superset'},
-        {n:'DB RDL',r:'10-15 reps x 2-3 sets',g:'db-rdl',tag:'superset'},
+        {n:'Kettlebell Deadlift',r:'6-10 reps x 2-3 sets',g:'kb-deadlift',tag:'back-to-back'},
+        {n:'Dumbbell Romanian Deadlift',r:'10-15 reps x 2-3 sets',g:'db-rdl',tag:'back-to-back'},
         {n:'Sled Push',r:'15-20m',g:'sled-push',tag:'optional'},
         {n:'Bulgarian Split Squats',r:'8-12 per leg x 2-3 sets',g:'bulgarian-split-squats'},
-        {n:'DB Walking Lunges',r:'12-16 per leg x 2-3 sets',g:'walking-lunges'},
+        {n:'Dumbbell Walking Lunges',r:'12-16 per leg x 2-3 sets',g:'walking-lunges'},
         {n:'Squat Hold',r:'Hold while partner works',g:'squat-hold'},
-      ], note:'Rest 60-90s between sets. Partner swap format.'},
+      ], note:'Rest 60-90 sec between sets. Take turns with partner.'},
       { label:'Stretch', type:'stretch', items:[
         {n:'Deep Squat Hold',r:'45s',g:'deep-squat-hold'},
         {n:'Pigeon Stretch',r:'30s each side',g:'pigeon-stretch'},
@@ -250,17 +250,17 @@ const DAYS = {
     ]
   },
   wednesday: {
-    title:'Upper Engine + Hypertrophy', duration:'34 min',
+    title:'Upper Body Strength', duration:'34 min',
     phases: [
       { label:'Warm Up', type:'warmup', items:[
         {n:'Scap Push-Ups',r:'10 reps',g:'scap-push-ups'},
         {n:'Band Pull-Aparts',r:'10 reps',g:'band-pull-aparts'},
-        {n:'Light DB Rows',r:'10 each arm',g:'db-rows'},
+        {n:'Light Dumbbell Rows',r:'10 each arm',g:'db-rows'},
         {n:'Slow Push-Ups',r:'10 reps',g:'push-ups'},
       ]},
       { label:'Workout', type:'workout', items:[
-        {n:'DB Bench Press',r:'10 reps x 3 rounds',g:'db-bench-press'},
-        {n:'DB Row',r:'12 each arm x 3 rounds',g:'db-rows'},
+        {n:'Dumbbell Bench Press',r:'10 reps x 3 rounds',g:'db-bench-press'},
+        {n:'Dumbbell Row',r:'12 each arm x 3 rounds',g:'db-rows'},
         {n:'Lateral Raises',r:'10-12 reps x 3 rounds',g:'lateral-raises'},
         {n:'Rear Delt Fly',r:'12-15 reps x 3 rounds',g:'rear-delt-fly'},
         {n:'Sit-Ups',r:'20 reps x 3 rounds',g:'sit-ups'},
@@ -289,7 +289,7 @@ const DAYS = {
       { label:'Workout', type:'workout', items:[
         {n:'Bike, Row, or Ski',r:'10 min steady pace',g:'bike'},
         {n:'Hip Thrusts',r:'12 reps x 3 rounds',g:'hip-thrusts'},
-        {n:'DB RDL',r:'15 reps x 3 rounds',g:'db-rdl'},
+        {n:'Dumbbell Romanian Deadlift',r:'15 reps x 3 rounds',g:'db-rdl'},
         {n:'Step-Ups',r:'12 each leg x 3 rounds',g:'step-ups'},
       ], note:'Rest 60 sec between rounds. 5 min cooldown walk after.'},
       { label:'Stretch', type:'stretch', items:[
@@ -303,7 +303,7 @@ const DAYS = {
     ]
   },
   friday: {
-    title:'3 Station Race', duration:'23 min',
+    title:'Cardio + Core Race', duration:'23 min',
     phases: [
       { label:'Warm Up', type:'warmup', items:[
         {n:'Easy Jog / Machine',r:'200m',g:'treadmill'},
@@ -316,7 +316,7 @@ const DAYS = {
         {n:'Machine (Rower/Ski/Bike)',r:'6 min max calories',g:'rowing-machine'},
         {n:'Core Work',r:'3x1 min on, 1 min rest, then 2x1 min',g:'sit-ups'},
         {n:'Treadmill Sprint',r:'6 min max distance',g:'treadmill'},
-      ], note:'Teams rotate every 6 min. One person works at a time.'},
+      ], note:'Rotate every 6 min. One person works at a time.'},
       { label:'Stretch', type:'stretch', items:[
         {n:'Deep Squat Hold',r:'30s',g:'deep-squat-hold'},
         {n:'Hamstring Stretch',r:'30s each leg',g:'hamstring-stretch'},
@@ -332,9 +332,9 @@ const DAYS = {
     phases: [
       { label:'Workout', type:'workout', items:[
         {n:'Goblet Squat',r:'10-12 reps x 2-3 rounds',g:'goblet-squat'},
-        {n:'KB or DB RDL',r:'10-12 reps x 2-3 rounds',g:'db-rdl'},
-        {n:'DB Shoulder Press',r:'10-12 reps x 2 rounds',g:'db-shoulder-press'},
-        {n:'DB Row',r:'10-12 each side x 2 rounds',g:'db-rows'},
+        {n:'Kettlebell or Dumbbell Romanian Deadlift',r:'10-12 reps x 2-3 rounds',g:'db-rdl'},
+        {n:'Dumbbell Shoulder Press',r:'10-12 reps x 2 rounds',g:'db-shoulder-press'},
+        {n:'Dumbbell Row',r:'10-12 each side x 2 rounds',g:'db-rows'},
         {n:'Sit-Ups',r:'15-20 reps x 2 rounds',g:'sit-ups'},
         {n:'Dead Bugs',r:'10-15 each side x 2 rounds',g:'dead-bug'},
         {n:'Plank',r:'30-40 sec x 2 rounds',g:'plank'},
@@ -349,7 +349,7 @@ const DAYS = {
     ]
   },
   sunday: {
-    title:'KOT Recovery', duration:'30 min',
+    title:'Mobility + Recovery', duration:'30 min',
     phases: [
       { label:'Warm Up', type:'warmup', items:[
         {n:'Ankle Rocks',r:'30 sec each leg',g:''},
@@ -359,7 +359,7 @@ const DAYS = {
         {n:'Slow Good Mornings',r:'10 reps',g:'good-mornings'},
       ]},
       { label:'Workout', type:'workout', items:[
-        {n:'ATG Split Squats',r:'8-10 each leg x 3 rounds (4s down, 2s pause)',g:'atg-split-squats'},
+        {n:'Deep Split Squats',r:'8-10 each leg x 3 rounds (4s down, 2s pause)',g:'atg-split-squats'},
         {n:'Tib Raises',r:'15-20 reps x 3 rounds',g:'tib-raises'},
         {n:'Calf Stretch',r:'20-30 sec x 3 rounds',g:'calf-stretch'},
         {n:'Single-Leg Calf Raises',r:'15 reps slow x 3 rounds',g:'calf-raises'},
