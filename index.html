@@ -155,10 +155,9 @@ body{
 .sheet.show{transform:translate(-50%,0)}
 .sheet-handle{width:40px;height:4px;background:rgba(255,255,255,0.12);border-radius:2px;margin:12px auto 0}
 .sheet-gif{
-  width:100%;aspect-ratio:1;background:var(--bg);display:flex;
-  align-items:center;justify-content:center;overflow:hidden;
+  width:100%;background:var(--bg);overflow:hidden;
 }
-.sheet-gif img,.sheet-gif video{width:100%;height:100%;object-fit:contain}
+.sheet-gif img,.sheet-gif video{width:100%;display:block;object-fit:cover}
 .sheet-info{padding:24px 24px 8px}
 .sheet-info h3{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.5px}
 .sheet-info .sheet-detail{font-size:13px;color:var(--text-2);margin-top:6px}
@@ -443,7 +442,8 @@ const DAYS={
 
 const dayOrder=['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
 const dayLabels=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-let active=dayOrder[new Date().getDay()===0?6:new Date().getDay()-1];
+const todayIdx=new Date().getDay();
+let active=todayIdx>=1&&todayIdx<=7?dayOrder[todayIdx-1]:'monday';
 
 // SWIPE
 let touchStartX=0,touchStartY=0,swiping=false;
