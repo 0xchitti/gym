@@ -107,8 +107,8 @@ body{
   width:60px;height:60px;border-radius:12px;background:var(--surface-2);
   flex-shrink:0;overflow:hidden;position:relative;
 }
-.ex-thumb img{width:100%;height:100%;object-fit:cover;transition:opacity 0.3s}
-.ex-thumb img.loading{opacity:0}
+.ex-thumb img,.ex-thumb video{width:100%;height:100%;object-fit:cover;transition:opacity 0.3s}
+.ex-thumb img.loading,.ex-thumb video.loading{opacity:0}
 .ex-thumb .skeleton{
   position:absolute;inset:0;
   background:linear-gradient(110deg,var(--surface-2) 30%,#222 50%,var(--surface-2) 70%);
@@ -158,7 +158,7 @@ body{
   width:100%;aspect-ratio:1;background:var(--bg);display:flex;
   align-items:center;justify-content:center;overflow:hidden;
 }
-.sheet-gif img{width:100%;height:100%;object-fit:contain}
+.sheet-gif img,.sheet-gif video{width:100%;height:100%;object-fit:contain}
 .sheet-info{padding:24px 24px 8px}
 .sheet-info h3{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.5px}
 .sheet-info .sheet-detail{font-size:13px;color:var(--text-2);margin-top:6px}
@@ -189,7 +189,7 @@ body{
 <div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()"></div>
 <div class="sheet" id="sheet">
   <div class="sheet-handle"></div>
-  <div class="sheet-gif"><img id="sheetImg" src="" alt=""></div>
+  <div class="sheet-gif"><video id="sheetVid" src="" autoplay loop muted playsinline></video></div>
   <div class="sheet-info">
     <h3 id="sheetTitle"></h3>
     <div class="sheet-detail" id="sheetDetail"></div>
@@ -199,66 +199,64 @@ body{
 
 <script>
 const G={
-'push-ups':'https://static.exercisedb.dev/media/wbUYILZ.gif',
-'air-squats':'https://static.exercisedb.dev/media/BReCuOn.gif',
-'sit-ups':'https://static.exercisedb.dev/media/wnEscH8.gif',
-'plank':'https://static.exercisedb.dev/media/VBAWRPG.gif',
-'dead-bug':'https://static.exercisedb.dev/media/iny3m5y.gif',
-'toe-taps':'https://static.exercisedb.dev/media/p195zsJ.gif',
-'rowing-machine':'https://static.exercisedb.dev/media/7I6LNUG.gif',
-'atg-split-squats':'https://static.exercisedb.dev/media/QpXqiq8.gif',
-'supermen':'https://static.exercisedb.dev/media/4GqRrAk.gif',
-'back-squats':'https://static.exercisedb.dev/media/RYcV1kH.gif',
-'squat-hold':'https://static.exercisedb.dev/media/HbSG1Pw.gif',
-'db-rows':'https://static.exercisedb.dev/media/BJ0Hz5L.gif',
-'db-bench-press':'https://static.exercisedb.dev/media/SpYC0Kp.gif',
-'lateral-raises':'https://static.exercisedb.dev/media/dRTfGZT.gif',
-'rear-delt-fly':'https://static.exercisedb.dev/media/XUUD0Fs.gif',
-'leg-raises':'https://static.exercisedb.dev/media/UGhRD1A.gif',
-'side-plank':'https://static.exercisedb.dev/media/X6ytgYZ.gif',
-'step-ups':'https://static.exercisedb.dev/media/gFyFj9z.gif',
-'high-knees':'https://static.exercisedb.dev/media/ealLwvX.gif',
-'bike':'https://static.exercisedb.dev/media/H1PESYI.gif',
-'lunges':'https://static.exercisedb.dev/media/XalXcvM.gif',
-'goblet-squat':'https://static.exercisedb.dev/media/yn8yg1r.gif',
-'tib-raises':'https://static.exercisedb.dev/media/DEEqoI2.gif',
-'calf-raises':'https://static.exercisedb.dev/media/8ozhUIZ.gif',
-'treadmill':'https://static.exercisedb.dev/media/rjiM4L3.gif',
-'burpees':'https://static.exercisedb.dev/media/mr7pkqP.gif',
-'sled-push':'https://static.exercisedb.dev/media/XDOiFns.gif',
-'deep-squat':'https://static.exercisedb.dev/media/BReCuOn.gif',
-'single-leg-balance':'https://static.exercisedb.dev/media/wWFspEi.gif',
-'walking-lunges':'https://static.exercisedb.dev/media/J9zIWig.gif',
-'scap-push-ups':'https://static.exercisedb.dev/media/GdMa1ET.gif',
-'jumping-jacks':'https://static.exercisedb.dev/media/1g5bPpA.gif',
-'db-shoulder-press':'https://static.exercisedb.dev/media/1TkiAFK.gif',
-'kb-deadlifts':'https://static.exercisedb.dev/media/8ARQ9Hw.gif',
-'kb-deadlift':'https://static.exercisedb.dev/media/8ARQ9Hw.gif',
-'glute-bridges':'https://static.exercisedb.dev/media/qKBpF7I.gif',
-'db-rdl':'https://static.exercisedb.dev/media/KUaoUV8.gif',
-'bulgarian-split-squats':'https://static.exercisedb.dev/media/QpXqiq8.gif',
-'band-pull-aparts':'https://static.exercisedb.dev/media/wXvUZC8.gif',
-'hip-hinges':'https://static.exercisedb.dev/media/XlZ4lAC.gif',
-'hip-thrusts':'https://static.exercisedb.dev/media/yWxMvB5.gif',
-'good-mornings':'https://static.exercisedb.dev/media/XlZ4lAC.gif',
-'jefferson-curl':'https://static.exercisedb.dev/media/pkSoCW9.gif',
-'poliquin-step-downs':'https://static.exercisedb.dev/media/gFyFj9z.gif',
-'slantboard-squats':'https://static.exercisedb.dev/media/0lQnxMZ.gif',
-'calf-stretch':'https://static.exercisedb.dev/media/17bqEXD.gif',
-'chest-stretch':'https://static.exercisedb.dev/media/3uj0Ozg.gif',
-'quad-stretch':'https://static.exercisedb.dev/media/tFGKm99.gif',
-'hip-flexor-stretch':'https://static.exercisedb.dev/media/tFGKm99.gif',
-'cat-cow':'https://static.exercisedb.dev/media/JbC2iaV.gif',
-'childs-pose':'https://static.exercisedb.dev/media/qBcKorM.gif',
-'s-calf-stretch':'https://static.exercisedb.dev/media/m0tCHqc.gif',
-'deep-squat-hold':'https://static.exercisedb.dev/media/BReCuOn.gif',
-'pigeon-stretch':'https://static.exercisedb.dev/media/bWlZvXh.gif',
-'hamstring-stretch':'https://static.exercisedb.dev/media/99rWm7w.gif',
-'shoulder-cross':'https://static.exercisedb.dev/media/uOV3Itw.gif',
-'tricep-stretch':'https://static.exercisedb.dev/media/Z5YStHW.gif',
-'cobra-stretch':'https://static.exercisedb.dev/media/isofgzg.gif',
-'butterfly-stretch':'https://static.exercisedb.dev/media/bWlZvXh.gif',
-'spinal-twist':'https://static.exercisedb.dev/media/2jl9K55.gif',
+'air-squats':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-bodyweight-squat-front.mp4',
+'atg-split-squats':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-bulgarian-split-squat-front.mp4',
+'back-squats':'https://media.musclewiki.com/media/uploads/videos/branded/male-Barbell-barbell-squat-front.mp4',
+'band-pull-aparts':'https://media.musclewiki.com/media/uploads/videos/branded/male-Band-band-pull-apart-front.mp4',
+'bike':'https://media.musclewiki.com/media/uploads/videos/branded/male-Cardio-stationary-bike-front.mp4',
+'bulgarian-split-squats':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-bulgarian-split-squat-front.mp4',
+'burpees':'https://media.musclewiki.com/media/uploads/videos/branded/male-bodyweight-burpee-front.mp4',
+'butterfly-stretch':'https://media.musclewiki.com/media/uploads/videos/branded/male-glutes-stretch-variation-1-front.mp4',
+'calf-raises':'https://media.musclewiki.com/media/uploads/videos/branded/male-Vitruvian-standing-calf-raise-front.mp4',
+'calf-stretch':'https://media.musclewiki.com/media/uploads/videos/branded/male-calves-stretch-variation-1-front.mp4',
+'cat-cow':'https://media.musclewiki.com/media/uploads/videos/branded/male-lower-back-stretch-variation-1-front.mp4',
+'chest-stretch':'https://media.musclewiki.com/media/uploads/videos/branded/male-chest-stretch-variation-1-front.mp4',
+'childs-pose':'https://media.musclewiki.com/media/uploads/videos/branded/male-lower-back-stretch-variation-2-front.mp4',
+'cobra-stretch':'https://media.musclewiki.com/media/uploads/videos/branded/male-Recovery-cobra-stretch-1-front.mp4',
+'db-bench-press':'https://media.musclewiki.com/media/uploads/videos/branded/male-Vitruvian-bench-press-front.mp4',
+'db-rdl':'https://media.musclewiki.com/media/uploads/videos/branded/male-Vitruvian-romanian-deadlift-front.mp4',
+'db-rows':'https://media.musclewiki.com/media/uploads/videos/branded/male-Dumbbells-dumbbell-row-unilateral-front.mp4',
+'db-shoulder-press':'https://media.musclewiki.com/media/uploads/videos/branded/male-Dumbbells-dumbbell-overhead-press-front.mp4',
+'dead-bug':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-dead-bug-front.mp4',
+'deep-squat':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-bodyweight-squat-front.mp4',
+'deep-squat-hold':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-bodyweight-squat-front.mp4',
+'glute-bridges':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-glute-bridge-front.mp4',
+'goblet-squat':'https://media.musclewiki.com/media/uploads/videos/branded/male-dumbbell-goblet-squat-front.mp4',
+'good-mornings':'https://media.musclewiki.com/media/uploads/videos/branded/male-plate-good-morning-front.mp4',
+'hamstring-stretch':'https://media.musclewiki.com/media/uploads/videos/branded/male-hamstrings-stretch-variation-1-front.mp4',
+'high-knees':'https://media.musclewiki.com/media/uploads/videos/branded/male-bodyweight-mountain-climber-front.mp4',
+'hip-flexor-stretch':'https://media.musclewiki.com/media/uploads/videos/branded/male-Recovery-hip-flexor-stretch-kneeling-lunge-1-front.mp4',
+'hip-hinges':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-half-kneeling-hip-hinge-front.mp4',
+'hip-thrusts':'https://media.musclewiki.com/media/uploads/videos/branded/male-Barbell-barbell-hip-thrust-front.mp4',
+'jefferson-curl':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-bodyweight-spinal-jefferson-curl-front.mp4',
+'jumping-jacks':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-bodyweight-plank-jack-front.mp4',
+'kb-deadlift':'https://media.musclewiki.com/media/uploads/videos/branded/male-Kettlebells-kettlebell-sumo-deadlift-front.mp4',
+'kb-deadlifts':'https://media.musclewiki.com/media/uploads/videos/branded/male-Kettlebells-kettlebell-sumo-deadlift-front.mp4',
+'lateral-raises':'https://media.musclewiki.com/media/uploads/videos/branded/male-Dumbbells-dumbbell-lateral-raise-front.mp4',
+'leg-raises':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-laying-leg-raises-front.mp4',
+'lunges':'https://media.musclewiki.com/media/uploads/videos/branded/male-Recovery-lunge-alternate-front.mp4',
+'pigeon-stretch':'https://media.musclewiki.com/media/uploads/videos/branded/male-yoga-pigeon-pose-front.mp4',
+'plank':'https://media.musclewiki.com/media/uploads/videos/branded/male-Medicine-Ball-plank-front.mp4',
+'poliquin-step-downs':'https://media.musclewiki.com/media/uploads/videos/branded/male-Dumbbells-dumbbell-step-up-front.mp4',
+'push-ups':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-push-up-front.mp4',
+'quad-stretch':'https://media.musclewiki.com/media/uploads/videos/branded/male-quads-stretch-variation-1-front.mp4',
+'rear-delt-fly':'https://media.musclewiki.com/media/uploads/videos/branded/male-Dumbbells-dumbbell-rear-delt-fly-front.mp4',
+'rowing-machine':'https://media.musclewiki.com/media/uploads/videos/branded/male-Cardio-cardio-row-erg-rower-front.mp4',
+'s-calf-stretch':'https://media.musclewiki.com/media/uploads/videos/branded/male-calves-stretch-variation-2-front.mp4',
+'scap-push-ups':'https://media.musclewiki.com/media/uploads/videos/branded/male-dumbbell-pushup-renegade-row-front.mp4',
+'shoulder-cross':'https://media.musclewiki.com/media/uploads/videos/branded/male-shoulders-stretch-variation-1-front.mp4',
+'side-plank':'https://media.musclewiki.com/media/uploads/videos/branded/male-bodyweight-elbow-side-plank-front.mp4',
+'sit-ups':'https://media.musclewiki.com/media/uploads/videos/branded/male-Vitruvian-crunch-front.mp4',
+'slantboard-squats':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-bodyweight-squat-front.mp4',
+'spinal-twist':'https://media.musclewiki.com/media/uploads/videos/branded/male-yoga-supine-twist-lying-front.mp4',
+'squat-hold':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-wall-sit-front.mp4',
+'step-ups':'https://media.musclewiki.com/media/uploads/videos/branded/male-Dumbbells-dumbbell-step-up-front.mp4',
+'supermen':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-bodyweight-superman-pull-front.mp4',
+'tib-raises':'https://media.musclewiki.com/media/uploads/videos/branded/male-Band-band-calf-raise-front.mp4',
+'toe-taps':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-toe-tap-front.mp4',
+'treadmill':'https://media.musclewiki.com/media/uploads/videos/branded/male-Cardio-curve-treadmill-front.mp4',
+'tricep-stretch':'https://media.musclewiki.com/media/uploads/videos/branded/male-triceps-stretch-variation-1-front.mp4',
+'walking-lunges':'https://media.musclewiki.com/media/uploads/videos/branded/male-Recovery-lunge-walking-front.mp4'
 };
 
 function e(n,s,r,g,sub,tag){return{n,s,r,g:G[g]||'',sub:sub||'',tag:tag||null}}
@@ -513,7 +511,7 @@ function render(){
     if(p.items)p.items.forEach(ex=>{
       h+=`<div class="ex-card" ${ex.g?`onclick="openSheet('${ex.g.replace(/'/g,"\\'")}','${ex.n.replace(/'/g,"\\'")}','${[ex.sub,ex.s,ex.r].filter(Boolean).join(' · ')}')"`:''}>`;
       h+=`<div class="ex-thumb">`;
-      if(ex.g)h+=`<div class="skeleton"></div><img src="${ex.g}" alt="${ex.n}" loading="lazy" class="loading" onload="this.classList.remove('loading');this.previousElementSibling.style.display='none'" onerror="this.outerHTML='<div class=ph>${ex.n}</div>';this.previousElementSibling.style.display='none'">`;
+      if(ex.g)h+=`<div class="skeleton"></div><video src="${ex.g}" autoplay loop muted playsinline preload="metadata" class="loading" onloadeddata="this.classList.remove('loading');this.previousElementSibling.style.display='none'" onerror="this.outerHTML='<div class=ph>${ex.n}</div>';this.previousElementSibling.style.display='none'"></video>`;
       else h+=`<div class="ph">${ex.n}</div>`;
       h+=`</div><div class="ex-body">`;
       h+=`<div class="ex-name">${ex.n}`;
@@ -532,8 +530,8 @@ function render(){
 
 // BOTTOM SHEET
 function openSheet(gif,name,detail){
-  document.getElementById('sheetImg').src=gif;
-  document.getElementById('sheetImg').style.display=gif?'block':'none';
+  document.getElementById('sheetVid').src=gif;
+  document.getElementById('sheetVid').style.display=gif?'block':'none';
   document.getElementById('sheetTitle').textContent=name;
   document.getElementById('sheetDetail').textContent=detail;
   document.getElementById('sheetOverlay').classList.add('show');
