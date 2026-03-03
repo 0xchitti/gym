@@ -442,8 +442,7 @@ const DAYS={
 
 const dayOrder=['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
 const dayLabels=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const todayIdx=new Date().getDay();
-let active=todayIdx>=1&&todayIdx<=7?dayOrder[todayIdx-1]:'monday';
+let active='monday';
 
 // SWIPE
 let touchStartX=0,touchStartY=0,swiping=false;
