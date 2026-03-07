@@ -55,7 +55,7 @@ body{
 .days{display:flex;gap:6px;padding-bottom:14px;overflow-x:auto;scrollbar-width:none}
 .days::-webkit-scrollbar{display:none}
 .day-btn{
-  flex-shrink:0;padding:10px 0;width:46px;border:none;border-radius:12px;
+  flex-shrink:0;padding:10px 0;min-width:46px;padding-left:6px;padding-right:6px;border:none;border-radius:12px;
   background:transparent;color:var(--text-3);font-family:'Space Grotesk',sans-serif;
   font-size:13px;font-weight:600;cursor:pointer;transition:all 0.25s;
   display:flex;flex-direction:column;align-items:center;gap:4px;
@@ -255,7 +255,24 @@ const G={
 'toe-taps':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-toe-tap-front.mp4',
 'treadmill':'https://media.musclewiki.com/media/uploads/videos/branded/male-Cardio-curve-treadmill-front.mp4',
 'tricep-stretch':'https://media.musclewiki.com/media/uploads/videos/branded/male-triceps-stretch-variation-1-front.mp4',
-'walking-lunges':'https://media.musclewiki.com/media/uploads/videos/branded/male-Recovery-lunge-walking-front.mp4'
+'walking-lunges':'https://media.musclewiki.com/media/uploads/videos/branded/male-Recovery-lunge-walking-front.mp4',
+'arm-swings':'https://media.musclewiki.com/media/uploads/videos/branded/male-shoulders-stretch-variation-1-front.mp4',
+'side-rotations':'https://media.musclewiki.com/media/uploads/videos/branded/male-yoga-supine-twist-lying-front.mp4',
+'side-lunges':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-bodyweight-side-lunge-front.mp4',
+'standing-crunches':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-standing-crunch-front.mp4',
+'twisters':'https://media.musclewiki.com/media/uploads/videos/branded/male-yoga-supine-twist-lying-front.mp4',
+'butt-kicks':'https://media.musclewiki.com/media/uploads/videos/branded/male-bodyweight-butt-kick-front.mp4',
+'cross-stretch':'https://media.musclewiki.com/media/uploads/videos/branded/male-shoulders-stretch-variation-1-front.mp4',
+'diamond-pushups':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-diamond-push-up-front.mp4',
+'squat-jumps':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-bodyweight-jump-squat-front.mp4',
+'shoulder-press':'https://media.musclewiki.com/media/uploads/videos/branded/male-Dumbbells-dumbbell-overhead-press-front.mp4',
+'front-raises':'https://media.musclewiki.com/media/uploads/videos/branded/male-Dumbbells-dumbbell-front-raise-front.mp4',
+'bicep-curls':'https://media.musclewiki.com/media/uploads/videos/branded/male-Dumbbells-dumbbell-curl-front.mp4',
+'tricep-kickbacks':'https://media.musclewiki.com/media/uploads/videos/branded/male-Dumbbells-dumbbell-kickback-front.mp4',
+'knee-touch':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-laying-leg-raises-front.mp4',
+'russian-twists':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-russian-twist-front.mp4',
+'bicycles':'https://media.musclewiki.com/media/uploads/videos/branded/male-Bodyweight-bicycle-crunch-front.mp4',
+'knee-elbow-plank':'https://media.musclewiki.com/media/uploads/videos/branded/male-bodyweight-mountain-climber-front.mp4'
 };
 
 function e(n,s,r,g,sub,tag){return{n,s,r,g:G[g]||'',sub:sub||'',tag:tag||null}}
@@ -440,8 +457,40 @@ const DAYS={
   ]}
 };
 
-const dayOrder=['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
-const dayLabels=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+DAYS['anyday']={title:'Any Day',sub:'Full Body Anywhere',duration:'45 min',phases:[
+  {label:'Warm Up',type:'warmup',note:'Circuit 1 — Get the body moving.',items:[
+    e('Arm Swings','','30 seconds','arm-swings','Bodyweight'),
+    e('Side Rotations','','30 seconds','side-rotations','Bodyweight'),
+    e('Side Lunges','','12 each side','side-lunges','Bodyweight'),
+    e('Standing Crunches','','15 each side','standing-crunches','Bodyweight'),
+    e('Twisters','','30 seconds','twisters','Bodyweight'),
+    e('Butt Kicks','','30 seconds','butt-kicks','Bodyweight'),
+    e('Cross Stretch','','30 seconds','cross-stretch','Bodyweight'),
+    e('Jumping Jacks','','30 seconds','jumping-jacks','Bodyweight'),
+  ]},
+  {label:'Push & Legs',type:'workout',note:'Circuit 2 — 50 pushups, 50 squats. Split across sets.',items:[
+    e('Pushups','5 sets','10 reps (50 total)','push-ups','Bodyweight'),
+    e('Squats','5 sets','10 reps (50 total)','air-squats','Bodyweight'),
+  ]},
+  {label:'Upper Body',type:'workout',note:'Circuit 3 — Use dumbbells or water bottles.',items:[
+    e('Dumbbell Rows','3 sets','12 each arm','db-rows','Dumbbell / Water Bottle'),
+    e('Shoulder Press','3 sets','12 reps','shoulder-press','Dumbbell / Water Bottle'),
+    e('Front Raises','3 sets','12 reps','front-raises','Dumbbell / Water Bottle'),
+    e('Lateral Raises','3 sets','12 reps','lateral-raises','Dumbbell / Water Bottle'),
+    e('Bicep Curls','3 sets','12 reps','bicep-curls','Dumbbell / Water Bottle'),
+    e('Tricep Kick Backs','3 sets','12 each arm','tricep-kickbacks','Dumbbell / Water Bottle'),
+    e('Calf Raises','3 sets','20 reps','calf-raises','Bodyweight'),
+  ]},
+  {label:'Core',type:'workout',note:'Circuit 4 — Abs and stability.',items:[
+    e('Knee Touches','3 sets','15 reps','knee-touch','Bodyweight'),
+    e('Russian Twists','3 sets','20 reps (10 each side)','russian-twists','Bodyweight'),
+    e('Bicycles','3 sets','20 reps (10 each side)','bicycles','Bodyweight'),
+    e('Knee to Elbow Plank','3 sets','10 each side','knee-elbow-plank','Bodyweight'),
+  ]},
+]};
+
+const dayOrder=['monday','tuesday','wednesday','thursday','friday','saturday','sunday','anyday'];
+const dayLabels=['Mon','Tue','Wed','Thu','Fri','Sat','Sun','Any Day'];
 let active='monday';
 
 // SWIPE
